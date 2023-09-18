@@ -1,5 +1,5 @@
 /*
- * ProjectTemplate
+ * quotebook
  *
  * Created by artembirmin on 3/11/2022.
  */
@@ -21,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.incetro.projecttemplate"
+        applicationId "com.incetro.quotebook"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -47,15 +47,15 @@ android {
 
         dev {
             applicationIdSuffix '.dev'
-            resValue 'string', 'app_name', 'ProjectTemplate dev'
-            buildConfigField 'String', 'DB_NAME', '"template.db.dev"'
+            resValue 'string', 'app_name', 'Quotebook dev'
+            buildConfigField 'String', 'DB_NAME', '"quotebook.db.dev"'
             buildConfigField 'String', 'SERVER_URL', '"http://abracadabra/api/"'
         }
 
         prod {
-            resValue 'string', 'app_name', 'ProjectTemplate'
+            resValue 'string', 'app_name', 'Quotebook'
             buildConfigField 'String', 'SERVER_URL', '"http://abracadabra/api/"'
-            buildConfigField 'String', 'DB_NAME', '"template.db"'
+            buildConfigField 'String', 'DB_NAME', '"quotebook.db"'
         }
     }
 
@@ -69,7 +69,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    namespace 'com.incetro.projecttemplate'
+    namespace 'com.incetro.quotebook'
 }
 
 dependencies {

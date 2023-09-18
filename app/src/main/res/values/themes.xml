@@ -1,12 +1,12 @@
 <!--
-  ~ ProjectTemplate
+  ~ Quotebook
   ~
-  ~ Created by artembirmin on 3/11/2022.
+  ~ Created by artembirmin on 18/9/2023.
   -->
 
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.ProjectTemplate" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <style name="Theme.quotebook" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/gray_500</item>

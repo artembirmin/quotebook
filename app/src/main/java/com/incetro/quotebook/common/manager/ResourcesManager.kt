@@ -1,0 +1,30 @@
+/*
+ * Quotebook
+ *
+ * Created by artembirmin on 18/9/2023.
+ */
+
+package com.incetro.quotebook.common.manager
+
+import android.content.Context
+import androidx.annotation.RawRes
+import androidx.annotation.StringRes
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class ResourcesManager @Inject constructor(private val context: Context) {
+
+    fun getString(@StringRes stringRes: Int): String {
+        return context.getString(stringRes)
+    }
+
+    fun getString(@StringRes stringRes: Int, vararg formatArgs: Any?): String {
+        return context.getString(stringRes, *formatArgs)
+    }
+
+    fun getJsonFromFile(@RawRes fileRes: Int): String {
+        return context.resources.openRawResource(fileRes)
+            .bufferedReader().use { it.readText() }
+    }
+}
