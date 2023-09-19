@@ -10,12 +10,18 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.incetro.quotebook.BuildConfig
-import com.incetro.quotebook.model.database.demo.DemoDao
-import com.incetro.quotebook.model.database.demo.DemoDto
+import com.incetro.quotebook.model.database.author.AuthorDto
+import com.incetro.quotebook.model.database.category.CategoryDto
+import com.incetro.quotebook.model.database.quote.QuoteCategoryCrossRef
+import com.incetro.quotebook.model.database.quote.QuoteDao
+import com.incetro.quotebook.model.database.quote.QuoteDto
 
 @Database(
     entities = [
-        DemoDto::class,
+        QuoteDto::class,
+        AuthorDto::class,
+        CategoryDto::class,
+        QuoteCategoryCrossRef::class,
     ],
     version = AppDatabase.VERSION
 )
@@ -27,5 +33,5 @@ abstract class AppDatabase : RoomDatabase() {
         const val VERSION = 31
     }
 
-    abstract fun demoDao(): DemoDao
+    abstract fun demoDao(): QuoteDao
 }

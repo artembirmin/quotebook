@@ -9,7 +9,7 @@ package com.incetro.quotebook.common.di.app.module
 import android.content.Context
 import androidx.room.Room
 import com.incetro.quotebook.model.database.AppDatabase
-import com.incetro.quotebook.model.database.demo.DemoDao
+import com.incetro.quotebook.model.database.quote.QuoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -34,5 +34,5 @@ class DatabaseModule {
 
     @Provides
     @Reusable
-    fun provideDemoDao(database: AppDatabase): DemoDao = database.demoDao()
+    fun provideDemoDao(database: AppDatabase): QuoteDao = database.demoDao()
 }

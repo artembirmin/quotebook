@@ -7,5 +7,6 @@
 package com.incetro.quotebook.entity.quote
 
 data class Author(
+    val id: String,
     val name: String
 )
