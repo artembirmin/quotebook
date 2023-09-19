@@ -4,14 +4,14 @@
  * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.database.quote
+package com.incetro.quotebook.model.data.database.quote
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import com.incetro.quotebook.entity.quote.Quote
-import com.incetro.quotebook.model.database.author.AuthorDto
-import com.incetro.quotebook.model.database.category.CategoryDto
+import com.incetro.quotebook.model.data.database.author.AuthorDto
+import com.incetro.quotebook.model.data.database.category.CategoryDto
 
 data class QuoteWithAuthorAndCategories(
     @Embedded val quoteDto: QuoteDto,

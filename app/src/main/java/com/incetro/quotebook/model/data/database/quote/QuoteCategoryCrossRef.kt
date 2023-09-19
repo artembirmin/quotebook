@@ -4,12 +4,12 @@
  * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.database.quote
+package com.incetro.quotebook.model.data.database.quote
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.incetro.quotebook.model.database.category.CategoryDto
+import com.incetro.quotebook.model.data.database.category.CategoryDto
 
 @Entity(
     primaryKeys = ["quoteId", "categoryId"],

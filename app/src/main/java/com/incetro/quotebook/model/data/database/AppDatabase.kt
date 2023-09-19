@@ -1,20 +1,20 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 18/9/2023.
+ * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.database
+package com.incetro.quotebook.model.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.incetro.quotebook.BuildConfig
-import com.incetro.quotebook.model.database.author.AuthorDto
-import com.incetro.quotebook.model.database.category.CategoryDto
-import com.incetro.quotebook.model.database.quote.QuoteCategoryCrossRef
-import com.incetro.quotebook.model.database.quote.QuoteDao
-import com.incetro.quotebook.model.database.quote.QuoteDto
+import com.incetro.quotebook.model.data.database.author.AuthorDto
+import com.incetro.quotebook.model.data.database.category.CategoryDto
+import com.incetro.quotebook.model.data.database.quote.QuoteCategoryCrossRef
+import com.incetro.quotebook.model.data.database.quote.QuoteDao
+import com.incetro.quotebook.model.data.database.quote.QuoteDto
 
 @Database(
     entities = [

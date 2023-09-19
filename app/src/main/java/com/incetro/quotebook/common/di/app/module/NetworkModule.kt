@@ -11,8 +11,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.incetro.quotebook.BuildConfig
-import com.incetro.quotebook.model.network.api.DemoApi
-import com.incetro.quotebook.model.network.interceptor.AppInfoInterceptor
+import com.incetro.quotebook.model.data.network.api.DemoApi
+import com.incetro.quotebook.model.data.network.interceptor.AppInfoInterceptor
 import com.incetro.quotebook.utils.FileLoggingTree
 import dagger.Module
 import dagger.Provides

@@ -8,7 +8,7 @@ package com.incetro.quotebook.app
 
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.common.navigation.Screens
-import com.incetro.quotebook.model.preferences.PreferencesManager
+import com.incetro.quotebook.model.data.preferences.PreferencesManager
 import com.incetro.quotebook.presentation.userstory.demo.demoscreen.DemoFragmentViewState
 import javax.inject.Inject
 import javax.inject.Singleton

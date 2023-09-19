@@ -4,7 +4,7 @@
  * Created by artembirmin on 18/9/2023.
  */
 
-package com.incetro.quotebook.model.database
+package com.incetro.quotebook.model.data.database
 
 import androidx.room.Delete
 import androidx.room.Insert

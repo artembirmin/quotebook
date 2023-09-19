@@ -17,9 +17,9 @@ import com.incetro.quotebook.common.di.app.module.DatabaseModule
 import com.incetro.quotebook.common.di.app.module.NetworkModule
 import com.incetro.quotebook.common.manager.ResourcesManager
 import com.incetro.quotebook.common.navigation.AppRouter
-import com.incetro.quotebook.model.database.AppDatabase
-import com.incetro.quotebook.model.database.quote.QuoteDao
-import com.incetro.quotebook.model.network.api.DemoApi
+import com.incetro.quotebook.model.data.database.AppDatabase
+import com.incetro.quotebook.model.data.database.quote.QuoteDao
+import com.incetro.quotebook.model.data.network.api.DemoApi
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
 import dagger.Component
 import javax.inject.Singleton

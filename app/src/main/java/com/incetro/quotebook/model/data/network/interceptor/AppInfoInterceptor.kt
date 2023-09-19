@@ -1,10 +1,10 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 18/9/2023.
+ * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.network.interceptor
+package com.incetro.quotebook.model.data.network.interceptor
 
 import com.incetro.quotebook.BuildConfig
 import okhttp3.Interceptor

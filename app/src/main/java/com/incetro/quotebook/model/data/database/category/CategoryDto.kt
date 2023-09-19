@@ -4,7 +4,7 @@
  * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.database.category
+package com.incetro.quotebook.model.data.database.category
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
