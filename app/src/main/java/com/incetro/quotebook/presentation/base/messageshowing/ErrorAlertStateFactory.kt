@@ -11,7 +11,7 @@ import com.incetro.quotebook.BuildConfig
 import com.incetro.quotebook.R
 import com.incetro.quotebook.common.manager.ResourcesManager
 import com.incetro.quotebook.entity.errors.ErrorBody
-import com.incetro.quotebook.model.network.NetworkConnectionError
+import com.incetro.quotebook.model.data.network.NetworkConnectionError
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException

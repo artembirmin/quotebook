@@ -11,8 +11,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.incetro.quotebook.BuildConfig
-import com.incetro.quotebook.model.network.api.DemoApi
-import com.incetro.quotebook.model.network.interceptor.AppInfoInterceptor
+import com.incetro.quotebook.model.data.network.api.CategoryApi
+import com.incetro.quotebook.model.data.network.interceptor.AppInfoInterceptor
 import com.incetro.quotebook.utils.FileLoggingTree
 import dagger.Module
 import dagger.Provides
@@ -94,7 +94,7 @@ class NetworkModule {
         retrofitBuilder: Retrofit.Builder,
         okHttpClientBuilder: OkHttpClient.Builder,
         appInfoInterceptor: AppInfoInterceptor,
-    ): DemoApi {
+    ): CategoryApi {
 
         okHttpClientBuilder
             .addInterceptor(appInfoInterceptor)
@@ -102,7 +102,7 @@ class NetworkModule {
         return retrofitBuilder
             .client(okHttpClientBuilder.build())
             .build()
-            .create(DemoApi::class.java)
+            .create(CategoryApi::class.java)
     }
 
     companion object {

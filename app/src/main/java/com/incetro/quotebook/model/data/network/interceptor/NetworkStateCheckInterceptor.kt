@@ -1,14 +1,14 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 18/9/2023.
+ * Created by artembirmin on 19/9/2023.
  */
 
-package com.incetro.quotebook.model.network.interceptor
+package com.incetro.quotebook.model.data.network.interceptor
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.incetro.quotebook.model.network.NetworkConnectionError
+import com.incetro.quotebook.model.data.network.NetworkConnectionError
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

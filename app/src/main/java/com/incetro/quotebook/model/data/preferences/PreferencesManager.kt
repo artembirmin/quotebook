@@ -4,7 +4,7 @@
  * Created by artembirmin on 18/9/2023.
  */
 
-package com.incetro.quotebook.model.preferences
+package com.incetro.quotebook.model.data.preferences
 
 import android.content.Context
 import com.google.gson.Gson
