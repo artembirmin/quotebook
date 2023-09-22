@@ -4,13 +4,13 @@
  * Created by artembirmin on 18/9/2023.
  */
 
-package com.incetro.quotebook.presentation.userstory.demo.di
+package com.incetro.quotebook.presentation.userstory.quote.di
 
 import com.incetro.quotebook.common.di.activity.ActivityComponent
 import com.incetro.quotebook.common.di.componentmanager.ComponentManager
 import com.incetro.quotebook.common.di.componentmanager.ComponentsManager
 import com.incetro.quotebook.common.di.scope.FeatureScope
-import com.incetro.quotebook.presentation.userstory.demo.demoscreen.DemoFragment
+import com.incetro.quotebook.presentation.userstory.quote.quotelist.QuoteListFragment
 import dagger.Component
 
 @FeatureScope
@@ -20,21 +20,21 @@ import dagger.Component
         DemoModule::class
     ]
 )
-interface DemoComponent {
-    fun inject(demoFragment: DemoFragment)
+interface QuoteComponent {
+    fun inject(quoteListFragment: QuoteListFragment)
 
     @Component.Builder
     interface Builder {
         fun activityComponent(component: ActivityComponent): Builder
-        fun build(): DemoComponent
+        fun build(): QuoteComponent
     }
 
-    object Manager : ComponentManager<DemoComponent>(
-        clazz = DemoComponent::class.java,
+    object Manager : ComponentManager<QuoteComponent>(
+        clazz = QuoteComponent::class.java,
         createAndSave = {
             val componentManager = ComponentsManager.getInstance()
             val activityComponent = ActivityComponent.Manager.getComponent()
-            val component = DaggerDemoComponent.builder()
+            val component = DaggerQuoteComponent.builder()
                 .activityComponent(activityComponent)
                 .build()
             componentManager.addComponent(component)

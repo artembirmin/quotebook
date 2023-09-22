@@ -4,7 +4,7 @@
  * Created by artembirmin on 18/9/2023.
  */
 
-package com.incetro.quotebook.presentation.userstory.demo.demoscreen
+package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
 import androidx.lifecycle.SavedStateHandle
 import com.incetro.quotebook.common.navigation.AppRouter
@@ -19,16 +19,16 @@ import dagger.assisted.AssistedInject
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 
-class DemoViewModel @AssistedInject constructor(
+class QuoteListViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
     private val router: AppRouter,
     baseViewModelDependencies: BaseViewModelDependencies
-) : BaseViewModel<DemoFragmentViewState, SideEffect>(baseViewModelDependencies) {
+) : BaseViewModel<QuoteListViewState, SideEffect>(baseViewModelDependencies) {
 
-    override val container: Container<DemoFragmentViewState, SideEffect> =
+    override val container: Container<QuoteListViewState, SideEffect> =
         container(
-            initialState = savedStateHandle.get<DemoFragmentViewState>(INITIAL_STATE_KEY)
-                ?: DemoFragmentViewState(),
+            initialState = savedStateHandle.get<QuoteListViewState>(INITIAL_STATE_KEY)
+                ?: QuoteListViewState(),
             savedStateHandle = savedStateHandle,
             buildSettings = {
                 exceptionHandler = coroutineExceptionHandler
@@ -41,7 +41,7 @@ class DemoViewModel @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<DemoViewModel> {
-        override fun create(handle: SavedStateHandle): DemoViewModel
+    interface Factory : ViewModelAssistedFactory<QuoteListViewModel> {
+        override fun create(handle: SavedStateHandle): QuoteListViewModel
     }
 }

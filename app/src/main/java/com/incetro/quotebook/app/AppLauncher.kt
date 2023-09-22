@@ -9,7 +9,7 @@ package com.incetro.quotebook.app
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.common.navigation.Screens
 import com.incetro.quotebook.model.data.preferences.PreferencesManager
-import com.incetro.quotebook.presentation.userstory.demo.demoscreen.DemoFragmentViewState
+import com.incetro.quotebook.presentation.userstory.quote.quotelist.QuoteListViewState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +24,6 @@ class AppLauncher @Inject constructor(
     fun start() {
         App.theme.value = preferencesManager.appTheme
 
-        router.newRootScreen(Screens.DemoScreen(DemoFragmentViewState()))
+        router.newRootScreen(Screens.DemoScreen())
     }
 }

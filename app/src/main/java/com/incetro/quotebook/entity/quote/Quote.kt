@@ -6,8 +6,11 @@
 
 package com.incetro.quotebook.entity.quote
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import org.joda.time.DateTime
 
+@Parcelize
 data class Quote(
     val id: Long = 0,
     val content: String = "",
@@ -15,6 +18,6 @@ data class Quote(
     val author: Author? = null,
     val writingDate: DateTime,
     val categories: List<Category> = emptyList(),
-)
+) : Parcelable
 
 
