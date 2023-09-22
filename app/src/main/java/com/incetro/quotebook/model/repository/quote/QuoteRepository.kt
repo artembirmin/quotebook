@@ -12,7 +12,7 @@ interface QuoteRepository {
 
     suspend fun createNewQuote(): Quote
 
-    suspend fun getQuote(quoteId: Int): Quote
+    suspend fun getQuote(quoteId: Long): Quote
 
     suspend fun updateQuote(quote: Quote): Quote
 

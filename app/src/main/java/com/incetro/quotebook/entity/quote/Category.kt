@@ -9,8 +9,8 @@ package com.incetro.quotebook.entity.quote
 import com.incetro.quotebook.model.data.database.category.CategoryDto
 
 data class Category(
-    val id: Int = 0,
+    val id: Long = 0,
     val name: String
 ) {
-    fun toDto(): CategoryDto = CategoryDto(id,name)
+    fun toDto(): CategoryDto = CategoryDto(id, name)
 }

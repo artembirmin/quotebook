@@ -15,10 +15,10 @@ import org.joda.time.DateTime
 )
 data class QuoteDto(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     val content: String = "",
     val source: String = "",
-    val authorId: Int? = null,
+    val authorId: Long? = null,
     val writingDate: DateTime = DateTime.now(),
 ) {
 

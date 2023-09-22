@@ -33,8 +33,8 @@ data class QuoteCategoryCrossRef(
     val quoteId: Long,
     @ColumnInfo(index = true)
     val categoryId: Long
-){
-    companion object{
+) {
+    companion object {
         const val TABLE_NAME = "quoteCategoryCrossRef"
     }
 }

@@ -12,15 +12,14 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.incetro.quotebook.model.data.database.BaseDao
 import com.incetro.quotebook.model.data.database.quote.QuoteCategoryCrossRef
-import com.incetro.quotebook.model.data.database.quote.QuoteDto
 
 @Dao
 interface CategoryDao : BaseDao<CategoryDto> {
 
     @Transaction
-    suspend fun addCategory(categoryName: String, quoteId: Int) {
+    suspend fun addCategory(categoryName: String, quoteId: Long) {
         val categoryId = getCategoryByName(categoryName)?.id
-            ?: insert(CategoryDto(name = categoryName)).toInt()
+            ?: insert(CategoryDto(name = categoryName))
         updateCrossRefTable(
             QuoteCategoryCrossRef(
                 quoteId = quoteId.toLong(),

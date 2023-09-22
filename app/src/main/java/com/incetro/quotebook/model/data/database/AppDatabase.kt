@@ -32,7 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val DB_NAME = BuildConfig.DB_NAME
-        const val VERSION = 3
+        const val VERSION = 4
     }
 
     abstract fun quoteDao(): QuoteDao

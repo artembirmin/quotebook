@@ -1,10 +1,10 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 20/9/2023.
+ * Created by artembirmin on 22/9/2023.
  */
 
-package com.incetro.quotebook
+package com.incetro.quotebook.quoteinteractor
 
 import com.incetro.quotebook.common.di.app.module.CommonAppModule
 import dagger.Component
@@ -18,7 +18,7 @@ import javax.inject.Singleton
     ]
 )
 interface QuoteTestComponent {
-    fun inject(quoteInstrumentedTest: QuoteInstrumentedTest)
+    fun inject(quoteInteractorInstrumentedTest: QuoteInteractorInstrumentedTest)
 
     @Component.Builder
     interface Builder {

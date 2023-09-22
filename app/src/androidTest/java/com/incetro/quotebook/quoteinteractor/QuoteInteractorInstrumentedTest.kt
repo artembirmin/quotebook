@@ -1,17 +1,17 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 18/9/2023.
+ * Created by artembirmin on 22/9/2023.
  */
 
-package com.incetro.quotebook
+package com.incetro.quotebook.quoteinteractor
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.incetro.quotebook.entity.quote.Author
 import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
-import com.incetro.quotebook.model.repository.quote.QuoteRepository
+import com.incetro.quotebook.model.interactor.QuoteInteractor
 import kotlinx.coroutines.test.runTest
 import org.joda.time.DateTime
 import org.junit.Assert
@@ -26,16 +26,16 @@ import javax.inject.Inject
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class QuoteInstrumentedTest {
+class QuoteInteractorInstrumentedTest {
 
     @Inject
-    lateinit var quoteRepository: QuoteRepository
+    lateinit var quoteInteractor: QuoteInteractor
 
     @Before
     fun setupTest() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val testComponent = DaggerTestComponent.builder()
+        val testComponent = DaggerQuoteTestComponent.builder()
             .testModule(QuoteTestModule(appContext))
             .build()
 
@@ -43,21 +43,21 @@ class QuoteInstrumentedTest {
     }
 
     @Test
-    fun createNewQuote() {
+    fun createEmptyQuote() {
         runTest {
-            val newQuote = quoteRepository.createNewQuote()
+            val newQuote = quoteInteractor.createEmptyQuote()
             println("newQuote = $newQuote")
-            val newQuoteFromDb = quoteRepository.getQuote(newQuote.id)
+            val newQuoteFromDb = quoteInteractor.getQuote(newQuote.id)
             println("newQuoteFromDb = $newQuoteFromDb")
             Assert.assertEquals(newQuote, newQuoteFromDb)
         }
     }
 
     @Test
-    fun editNewQuote() {
+    fun createNewQuote() {
         runTest {
-            val newQuote = quoteRepository.createNewQuote()
-            val editedQuote = newQuote.copy(
+            val emptyQuote = quoteInteractor.createEmptyQuote()
+            val newQuote = emptyQuote.copy(
                 content = "odio",
                 source = "fuisset",
                 author = Author(name = "Statham"),
@@ -68,24 +68,19 @@ class QuoteInstrumentedTest {
                     Category(name = "3")
                 )
             )
-            quoteRepository.updateQuote(editedQuote)
-            val editedQuoteFromDb = quoteRepository.getQuote(editedQuote.id)
-            val areContentTheSame = compareQuotesContent(editedQuote, editedQuoteFromDb)
+            quoteInteractor.updateQuote(newQuote)
+            val editedQuoteFromDb = quoteInteractor.getQuote(newQuote.id)
+            val areContentTheSame = compareQuotesContent(newQuote, editedQuoteFromDb)
             Assert.assertTrue(areContentTheSame)
         }
     }
 
-    @Test
+    @Test(expected = NullPointerException::class)
     fun deleteExistsQuote() {
         runTest {
             val quote = createQuote()
-            quoteRepository.deleteQuote(quote)
-
-            try {
-                quoteRepository.getQuote(quote.id)
-            } catch (e: Exception) {
-                Assert.assertTrue(e is NullPointerException)
-            }
+            quoteInteractor.deleteQuote(quote)
+            quoteInteractor.getQuote(quote.id)
         }
     }
 
@@ -99,12 +94,34 @@ class QuoteInstrumentedTest {
                 author = Author(name = "dftgvdsdfg"),
                 writingDate = DateTime.now(),
                 categories = listOf(
+                    Category(name = "3"),
                     Category(name = "1"),
-                    Category(name = "3")
+                    Category(name = "4"),
+                    Category(name = "5"),
                 )
             )
-            quoteRepository.updateQuote(editedQuote)
-            val editedQuoteFromDb = quoteRepository.getQuote(existsQuote.id)
+            quoteInteractor.updateQuote(editedQuote)
+            val editedQuoteFromDb = quoteInteractor.getQuote(existsQuote.id)
+            val areContentTheSame = compareQuotesContent(editedQuote, editedQuoteFromDb)
+            println("editedQuote = $editedQuote")
+            println("editedQuoteFromDb = $editedQuoteFromDb")
+            Assert.assertTrue(areContentTheSame)
+        }
+    }
+
+    @Test
+    fun clearExistsQuote() {
+        runTest {
+            val existsQuote = createQuote()
+            val editedQuote = existsQuote.copy(
+                content = "",
+                source = "",
+                author = null,
+                writingDate = DateTime.now(),
+                categories = emptyList()
+            )
+            quoteInteractor.updateQuote(editedQuote)
+            val editedQuoteFromDb = quoteInteractor.getQuote(existsQuote.id)
             val areContentTheSame = compareQuotesContent(editedQuote, editedQuoteFromDb)
             println("editedQuote = $editedQuote")
             println("editedQuoteFromDb = $editedQuoteFromDb")
@@ -113,8 +130,8 @@ class QuoteInstrumentedTest {
     }
 
     private suspend fun createQuote(): Quote {
-        val quote = quoteRepository.createNewQuote()
-        quoteRepository.updateQuote(
+        val quote = quoteInteractor.createEmptyQuote()
+        quoteInteractor.updateQuote(
             quote.copy(
                 content = "odio",
                 source = "fuisset",
@@ -127,7 +144,7 @@ class QuoteInstrumentedTest {
                 )
             )
         )
-        return quoteRepository.getQuote(quote.id)
+        return quoteInteractor.getQuote(quote.id)
     }
 
     private fun compareQuotesContent(

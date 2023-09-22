@@ -9,7 +9,7 @@ package com.incetro.quotebook.entity.quote
 import org.joda.time.DateTime
 
 data class Quote(
-    val id: Int = 0,
+    val id: Long = 0,
     val content: String = "",
     val source: String = "",
     val author: Author? = null,

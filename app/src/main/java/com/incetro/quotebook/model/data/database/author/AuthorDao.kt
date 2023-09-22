@@ -14,4 +14,7 @@ import com.incetro.quotebook.model.data.database.BaseDao
 interface AuthorDao : BaseDao<AuthorDto> {
     @Query("SELECT * FROM ${AuthorDto.TABLE_NAME} WHERE name = :name")
     suspend fun getAuthorByName(name: String): AuthorDto?
+
+    @Query("SELECT * FROM ${AuthorDto.TABLE_NAME} WHERE id = :id")
+    suspend fun getAuthorById(id: Long): AuthorDto
 }
