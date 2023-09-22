@@ -6,7 +6,6 @@
 
 package com.incetro.quotebook.model.data.database.quote
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.joda.time.DateTime
@@ -15,13 +14,14 @@ import org.joda.time.DateTime
     tableName = QuoteDto.TABLE_NAME
 )
 data class QuoteDto(
-    @PrimaryKey
-    val id: String,
-    val content: String,
-    val source: String,
-    val authorId: String,
-    val writingDate: DateTime,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val content: String = "",
+    val source: String = "",
+    val authorId: Int? = null,
+    val writingDate: DateTime = DateTime.now(),
 ) {
+
     companion object {
         const val TABLE_NAME = "quote"
     }

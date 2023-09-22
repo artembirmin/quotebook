@@ -1,7 +1,7 @@
 /*
  * Quotebook
  *
- * Created by artembirmin on 18/9/2023.
+ * Created by artembirmin on 20/9/2023.
  */
 
 package com.incetro.quotebook.model.data.database
@@ -20,7 +20,7 @@ interface BaseDao<T> {
      * @param obj the object to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(obj: T)
+    suspend fun insert(obj: T): Long
 
     /**
      * Insert an array of objects in the database.
@@ -52,7 +52,7 @@ interface BaseDao<T> {
      * @param objectsList the objects to be updated.
      */
     @Update
-    suspend fun updateAll(objectsList: List<T>): Int
+    suspend fun updateAll(objectsList: List<T>)
 
     /**
      * Delete an object from the database

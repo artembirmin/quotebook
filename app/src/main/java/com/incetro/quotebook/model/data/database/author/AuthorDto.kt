@@ -14,8 +14,8 @@ import com.incetro.quotebook.entity.quote.Author
     tableName = AuthorDto.TABLE_NAME
 )
 data class AuthorDto(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String
 ) {
     fun toAuthor(): Author = Author(id, name)

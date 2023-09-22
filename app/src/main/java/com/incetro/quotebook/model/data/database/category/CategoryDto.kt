@@ -14,8 +14,8 @@ import com.incetro.quotebook.entity.quote.Category
     tableName = CategoryDto.TABLE_NAME
 )
 data class CategoryDto(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String
 ) {
     fun toCategory(): Category = Category(id, name)

@@ -9,10 +9,9 @@ package com.incetro.quotebook.model.data.database.author
 import androidx.room.Dao
 import androidx.room.Query
 import com.incetro.quotebook.model.data.database.BaseDao
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface AuthorDao : BaseDao<AuthorDto> {
-
+    @Query("SELECT * FROM ${AuthorDto.TABLE_NAME} WHERE name = :name")
+    suspend fun getAuthorByName(name: String): AuthorDto?
 }

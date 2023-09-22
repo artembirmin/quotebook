@@ -19,7 +19,8 @@ import com.incetro.quotebook.common.manager.ResourcesManager
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.model.data.database.AppDatabase
 import com.incetro.quotebook.model.data.database.quote.QuoteDao
-import com.incetro.quotebook.model.data.network.api.DemoApi
+import com.incetro.quotebook.model.data.network.api.CategoryApi
+import com.incetro.quotebook.model.repository.quote.QuoteRepository
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
 import dagger.Component
 import javax.inject.Singleton
@@ -44,6 +45,7 @@ interface AppComponent {
     fun provideDeps(): BaseViewModelDependencies
 
     // CommonAppModule
+    fun provideQuoteRepository(): QuoteRepository
 
     // AppNavigationModule
     fun provideNavigationHolder(): NavigatorHolder
@@ -54,7 +56,7 @@ interface AppComponent {
     fun provideDemoDao(): QuoteDao
 
     // Network module
-    fun provideDemoApi(): DemoApi
+    fun provideDemoApi(): CategoryApi
 
     // Other
     fun provideResourcesManager(): ResourcesManager

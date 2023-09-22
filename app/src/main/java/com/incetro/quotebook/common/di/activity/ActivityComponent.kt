@@ -16,7 +16,7 @@ import com.incetro.quotebook.common.manager.ResourcesManager
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.model.data.database.AppDatabase
 import com.incetro.quotebook.model.data.database.quote.QuoteDao
-import com.incetro.quotebook.model.data.network.api.DemoApi
+import com.incetro.quotebook.model.data.network.api.CategoryApi
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
 import dagger.Component
 
@@ -42,7 +42,7 @@ interface ActivityComponent {
     fun provideDemoDao(): QuoteDao
 
     // Network module
-    fun provideDemoApi(): DemoApi
+    fun provideDemoApi(): CategoryApi
 
     // Other
     fun provideResourcesManager(): ResourcesManager

@@ -10,7 +10,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.incetro.quotebook.BuildConfig
+import com.incetro.quotebook.model.data.database.author.AuthorDao
 import com.incetro.quotebook.model.data.database.author.AuthorDto
+import com.incetro.quotebook.model.data.database.category.CategoryDao
 import com.incetro.quotebook.model.data.database.category.CategoryDto
 import com.incetro.quotebook.model.data.database.quote.QuoteCategoryCrossRef
 import com.incetro.quotebook.model.data.database.quote.QuoteDao
@@ -30,8 +32,10 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val DB_NAME = BuildConfig.DB_NAME
-        const val VERSION = 31
+        const val VERSION = 3
     }
 
-    abstract fun demoDao(): QuoteDao
+    abstract fun quoteDao(): QuoteDao
+    abstract fun categoryDao(): CategoryDao
+    abstract fun authorDao(): AuthorDao
 }

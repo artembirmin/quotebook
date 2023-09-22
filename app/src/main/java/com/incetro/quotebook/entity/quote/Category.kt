@@ -6,7 +6,11 @@
 
 package com.incetro.quotebook.entity.quote
 
+import com.incetro.quotebook.model.data.database.category.CategoryDto
+
 data class Category(
-    val id: String,
+    val id: Int = 0,
     val name: String
-)
+) {
+    fun toDto(): CategoryDto = CategoryDto(id,name)
+}

@@ -30,7 +30,11 @@ import com.incetro.quotebook.model.data.database.category.CategoryDto
 )
 data class QuoteCategoryCrossRef(
     @ColumnInfo(index = true)
-    val quoteId: String,
+    val quoteId: Long,
     @ColumnInfo(index = true)
-    val categoryId: String
-)
+    val categoryId: Long
+){
+    companion object{
+        const val TABLE_NAME = "quoteCategoryCrossRef"
+    }
+}
