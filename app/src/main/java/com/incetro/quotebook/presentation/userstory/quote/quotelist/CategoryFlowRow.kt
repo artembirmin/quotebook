@@ -94,11 +94,14 @@ fun CategoryFlowRow(categoryNameList: List<String>, modifier: Modifier = Modifie
     }
 }
 
+private val outerPaddingHorizontal = 4.dp
+private val innerPaddingHorizontal = 4.dp
+
 @Composable
 fun CategoryItem(categoryName: String) {
     Box(
         modifier = Modifier
-            .padding(2.dp)
+            .padding(horizontal = outerPaddingHorizontal)
             .background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = ShapeDefaults.Small
@@ -108,7 +111,7 @@ fun CategoryItem(categoryName: String) {
             text = categoryName,
             fontSize = getCategoryFontSize(),
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+            modifier = Modifier.padding(horizontal = innerPaddingHorizontal, vertical = 1.dp)
         )
     }
 }
@@ -118,5 +121,6 @@ fun getCategoryFontSize(): TextUnit = MaterialTheme.typography.bodyMedium.fontSi
 
 @Composable
 fun calculateCategoryWidth(text: String): Dp {
-    return text.length * getCategoryFontSize().value.dp * 0.6f + 12.dp
+    return text.length * getCategoryFontSize().value.dp * 0.6f +
+            outerPaddingHorizontal * 2 + innerPaddingHorizontal * 2
 }

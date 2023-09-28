@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.incetro.quotebook.entity.quote.Author
@@ -33,7 +34,12 @@ fun QuoteListItem(quote: Quote) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(text = quote.content, modifier = Modifier.padding(bottom = 8.dp))
+            Text(
+                text = quote.content,
+                modifier = Modifier.padding(bottom = 8.dp),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
             Text(
                 text = quote.author?.name ?: "Неизвестен",
                 modifier = Modifier.align(Alignment.End),
@@ -63,7 +69,7 @@ fun QuoteListItemPreview() {
     QuoteListItem(
         Quote(
             id = 1,
-            content = "Write tests",
+            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
             source = "Instagram",
             author = Author(id = 1, name = "Jason Statham"),
             writingDate = DateTime.now(),
@@ -83,5 +89,5 @@ fun QuoteListItemPreview() {
 @Preview
 @Composable
 fun CategoryItemPreview() {
-//    CategoryItem("Category")
+    CategoryItem("Category")
 }
