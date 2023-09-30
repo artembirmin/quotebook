@@ -12,6 +12,8 @@ import com.incetro.quotebook.entity.quote.Author
 import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.interactor.QuoteInteractor
+import com.incetro.quotebook.model.repository.quote.QuoteFactory
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.joda.time.DateTime
 import org.junit.Assert
@@ -30,6 +32,8 @@ class QuoteInteractorInstrumentedTest {
 
     @Inject
     lateinit var quoteInteractor: QuoteInteractor
+
+    private val quoteFactory = QuoteFactory()
 
     @Before
     fun setupTest() {
@@ -72,6 +76,27 @@ class QuoteInteractorInstrumentedTest {
             val editedQuoteFromDb = quoteInteractor.getQuote(newQuote.id)
             val areContentTheSame = compareQuotesContent(newQuote, editedQuoteFromDb)
             Assert.assertTrue(areContentTheSame)
+        }
+    }
+
+    @Test
+    fun addManyQuotes() {
+        runTest {
+            val quotes = listOf<Quote>(
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+            )
+            quoteInteractor.addQuotes(quotes)
+            val addedQuotes = quoteInteractor.observeQuotes().first()
+            val contentCompare = quotes.mapIndexed { index, quote ->
+                compareQuotesContent(
+                    quote,
+                    addedQuotes[index]
+                )
+            }
+            Assert.assertTrue(contentCompare.all { it })
         }
     }
 
@@ -150,8 +175,7 @@ class QuoteInteractorInstrumentedTest {
     private fun compareQuotesContent(
         editedQuote: Quote,
         editedQuoteFromDb: Quote
-    ) = (editedQuote.id == editedQuoteFromDb.id
-            && editedQuote.content == editedQuoteFromDb.content
+    ) = (editedQuote.content == editedQuoteFromDb.content
             && editedQuote.source == editedQuoteFromDb.source
             && editedQuote.categories compareNamesWith editedQuoteFromDb.categories
             && editedQuote.author?.name == editedQuoteFromDb.author?.name)

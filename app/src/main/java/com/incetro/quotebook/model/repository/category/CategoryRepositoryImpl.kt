@@ -23,13 +23,24 @@ class CategoryRepositoryImpl @Inject constructor(
         val currentCategories = quoteDao.getQuoteById(quoteId).categories.map { it.toCategory() }
 
         val oldCategories =
-            currentCategories.filterNot { current -> editedCategories.find { current.name == it.name } != null }
+            currentCategories.filterNot { current ->
+                editedCategories.find {
+                    current.name == it.name
+                } != null
+            }
 
-        val newCategories =
-            editedCategories.filterNot { current -> currentCategories.find { current.name == it.name } != null }
+        val newCategories = editedCategories
+            .filterNot { current ->
+                currentCategories.find {
+                    current.name == it.name
+                } != null
+            }.distinctBy { it.name }
 
+        Timber.e("quoteId = $quoteId, currentCategories = $currentCategories")
+        Timber.e("oldCategories = $oldCategories")
+        Timber.e("newCategories = $newCategories")
         newCategories.forEach {
-            Timber.e("add category $it")
+            Timber.e("add category = $it, quoteId = $quoteId")
             categoryDao.addCategory(it.name, quoteId)
         }
 

@@ -20,14 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.incetro.quotebook.entity.quote.Author
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.presentation.base.mvvm.view.BaseComposeFragment
-import com.incetro.quotebook.presentation.base.mvvm.view.getInitParams
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.SavedStateViewModelFactoryImpl
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.lazyViewModelByFactory
 import com.incetro.quotebook.presentation.ui.theme.AppTheme
@@ -44,8 +41,7 @@ class QuoteListFragment : BaseComposeFragment() {
     private val _viewModel: QuoteListViewModel by lazyViewModelByFactory {
         SavedStateViewModelFactoryImpl(
             this,
-            viewModelFactory,
-            getInitParams<QuoteListViewState>()
+            viewModelFactory
         )
     }
 
@@ -72,9 +68,7 @@ class QuoteListFragment : BaseComposeFragment() {
                     LargeTopAppBar(
                         title = {
                             Text(
-                                text = "Цитатникъ",
-                                fontSize = 42.sp,
-                                fontFamily = FontFamily.SansSerif
+                                text = "Цитатникъ"
                             )
                         },
                         scrollBehavior = scrollBehavior
@@ -83,10 +77,15 @@ class QuoteListFragment : BaseComposeFragment() {
             ) { innerPadding ->
                 LazyColumn(
                     Modifier.padding(innerPadding),
-                    contentPadding = PaddingValues(8.dp),
+                    contentPadding = PaddingValues(
+                        start = 8.dp,
+                        top = 8.dp,
+                        end = 8.dp,
+                        bottom = 16.dp
+                    ),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(viewState.quiteItems) { quote ->
+                    items(items = viewState.quiteItems, key = { it.id }) { quote ->
                         QuoteListItem(quote = quote)
                     }
                 }

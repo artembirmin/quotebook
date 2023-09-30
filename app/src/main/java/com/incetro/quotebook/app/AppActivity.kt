@@ -8,6 +8,7 @@ package com.incetro.quotebook.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -42,7 +43,7 @@ class AppActivity : AppCompatActivity() {
         setContentView(R.layout.layout_container)
 
         if (savedInstanceState == null) {
-            appLauncher.start()
+            appLauncher.start(lifecycleScope)
         }
     }
 
