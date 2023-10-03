@@ -8,8 +8,16 @@ package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -59,13 +67,17 @@ class QuoteListFragment : BaseComposeFragment() {
         Screen(viewState)
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
     @Composable
     fun Screen(viewState: QuoteListViewState) {
         AppTheme {
             val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
             Scaffold(
-                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                // https://issuetracker.google.com/issues/249727298
+                contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                modifier = Modifier
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .imePadding(),
                 topBar = {
                     LargeTopAppBar(
                         title = {
@@ -77,9 +89,19 @@ class QuoteListFragment : BaseComposeFragment() {
                     )
                 }
             ) { innerPadding ->
-                Column {
+                Column(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .consumeWindowInsets(innerPadding)
+                        .systemBarsPadding()
+                ) {
+                    SearchTextField(
+                        search = viewState.searchQuery,
+                        onValueChange = _viewModel::onSearch,
+                        modifier = Modifier.padding(8.dp)
+                    )
                     LazyColumn(
-                        Modifier.padding(innerPadding),
+                        modifier = Modifier.imePadding(),
                         contentPadding = PaddingValues(
                             start = 8.dp,
                             top = 8.dp,
@@ -88,12 +110,6 @@ class QuoteListFragment : BaseComposeFragment() {
                         ),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        item {
-                            SearchTextField(
-                                search = viewState.searchQuery,
-                                onValueChange = _viewModel::onSearch
-                            )
-                        }
                         val quotes = if (viewState.searchQuery.isNotBlank()) {
                             viewState.searchResult
                         } else {
@@ -101,6 +117,13 @@ class QuoteListFragment : BaseComposeFragment() {
                         }
                         items(items = quotes, key = { it.id }) { quote ->
                             QuoteListItem(quote = quote)
+                        }
+                        item {
+                            Spacer(
+                                Modifier.windowInsetsBottomHeight(
+                                    WindowInsets.ime
+                                )
+                            )
                         }
                     }
                 }
