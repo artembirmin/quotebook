@@ -7,6 +7,7 @@
 package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,6 +29,7 @@ import com.incetro.quotebook.presentation.base.mvvm.view.BaseComposeFragment
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.SavedStateViewModelFactoryImpl
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.lazyViewModelByFactory
 import com.incetro.quotebook.presentation.ui.theme.AppTheme
+import com.incetro.quotebook.presentation.ui.view.SearchTextField
 import com.incetro.quotebook.presentation.userstory.quote.di.QuoteComponent
 import org.joda.time.DateTime
 import org.orbitmvi.orbit.compose.collectAsState
@@ -75,18 +77,26 @@ class QuoteListFragment : BaseComposeFragment() {
                     )
                 }
             ) { innerPadding ->
-                LazyColumn(
-                    Modifier.padding(innerPadding),
-                    contentPadding = PaddingValues(
-                        start = 8.dp,
-                        top = 8.dp,
-                        end = 8.dp,
-                        bottom = 16.dp
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(items = viewState.quiteItems, key = { it.id }) { quote ->
-                        QuoteListItem(quote = quote)
+                Column {
+                    LazyColumn(
+                        Modifier.padding(innerPadding),
+                        contentPadding = PaddingValues(
+                            start = 8.dp,
+                            top = 8.dp,
+                            end = 8.dp,
+                            bottom = 16.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item {
+                            SearchTextField(
+                                search = viewState.searchQuery,
+                                onValueChange = _viewModel::onSearch
+                            )
+                        }
+                        items(items = viewState.quiteItems, key = { it.id }) { quote ->
+                            QuoteListItem(quote = quote)
+                        }
                     }
                 }
             }
@@ -103,13 +113,13 @@ class QuoteListFragment : BaseComposeFragment() {
         Screen(
             viewState = QuoteListViewState().copy(
                 quiteItems = listOf(
-                    Quote(content = quote.take(10), author = author, writingDate = date),
-                    Quote(content = quote.take(20), author = author, writingDate = date),
-                    Quote(content = quote.take(30), author = author, writingDate = date),
-                    Quote(content = quote.take(40), author = author, writingDate = date),
-                    Quote(content = quote.take(50), author = author, writingDate = date),
-                    Quote(content = quote.take(60), author = author, writingDate = date),
-                    Quote(content = quote.take(70), author = author, writingDate = date),
+                    Quote(id = 0, content = quote.take(10), author = author, writingDate = date),
+                    Quote(id = 2, content = quote.take(20), author = author, writingDate = date),
+                    Quote(id = 3, content = quote.take(30), author = author, writingDate = date),
+                    Quote(id = 4, content = quote.take(40), author = author, writingDate = date),
+                    Quote(id = 5, content = quote.take(50), author = author, writingDate = date),
+                    Quote(id = 6, content = quote.take(60), author = author, writingDate = date),
+                    Quote(id = 7, content = quote.take(70), author = author, writingDate = date),
                 )
             )
         )

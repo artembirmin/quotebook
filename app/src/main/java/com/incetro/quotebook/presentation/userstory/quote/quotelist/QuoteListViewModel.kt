@@ -48,6 +48,10 @@ class QuoteListViewModel @AssistedInject constructor(
         }
     }
 
+    fun onSearch(query: String) = intent {
+
+    }
+
     override fun onBackPressed() {
         router.exit()
     }
