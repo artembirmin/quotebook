@@ -94,7 +94,12 @@ class QuoteListFragment : BaseComposeFragment() {
                                 onValueChange = _viewModel::onSearch
                             )
                         }
-                        items(items = viewState.quiteItems, key = { it.id }) { quote ->
+                        val quotes = if (viewState.searchQuery.isNotBlank()) {
+                            viewState.searchResult
+                        } else {
+                            viewState.quiteItems
+                        }
+                        items(items = quotes, key = { it.id }) { quote ->
                             QuoteListItem(quote = quote)
                         }
                     }

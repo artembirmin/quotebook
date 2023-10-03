@@ -17,6 +17,7 @@ import kotlinx.parcelize.Parcelize
 data class QuoteListViewState(
     val quiteItems: List<Quote> = emptyList(),
     val searchQuery: String = "",
+    val searchResult: List<Quote> = emptyList(),
     @IgnoredOnParcel override var dialogState: AlertDialogState = AlertDialogState(),
     @IgnoredOnParcel override var loaderState: LoaderState = LoaderState()
 ) : ViewState() {

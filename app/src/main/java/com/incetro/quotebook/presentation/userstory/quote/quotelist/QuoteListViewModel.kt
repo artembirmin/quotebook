@@ -49,7 +49,15 @@ class QuoteListViewModel @AssistedInject constructor(
     }
 
     fun onSearch(query: String) = intent {
-
+        reduce {
+            val searchResult = state.quiteItems.filter {
+                it.content.contains(
+                    other = query,
+                    ignoreCase = true
+                )
+            }
+            state.copy(searchQuery = query, searchResult = searchResult)
+        }
     }
 
     override fun onBackPressed() {
