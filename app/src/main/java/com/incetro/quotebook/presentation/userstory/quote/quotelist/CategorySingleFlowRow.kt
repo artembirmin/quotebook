@@ -42,7 +42,7 @@ fun ChipsRowPreview() {
         Category(2, "Andrew"),
         Category(2, "Green"),
         Category(2, "Artemis"),
-        Category(2, "Coleman"),
+        Category(2, "Col"),
         Category(2, "Re"),
         Category(2, "1Ronnie"),
         Category(2, "2Ronnie"),
@@ -94,8 +94,8 @@ fun CategoryFlowRow(categoryNameList: List<String>, modifier: Modifier = Modifie
     }
 }
 
-private val outerPaddingHorizontal = 4.dp
-private val innerPaddingHorizontal = 4.dp
+private val outerPaddingHorizontal = 6.dp
+private val innerPaddingHorizontal = 6.dp
 
 @Composable
 fun CategoryItem(categoryName: String) {
@@ -117,10 +117,10 @@ fun CategoryItem(categoryName: String) {
 }
 
 @Composable
-fun getCategoryFontSize(): TextUnit = MaterialTheme.typography.bodyMedium.fontSize
+fun getCategoryFontSize(): TextUnit = MaterialTheme.typography.bodyLarge.fontSize
 
 @Composable
 fun calculateCategoryWidth(text: String): Dp {
-    return text.length * getCategoryFontSize().value.dp * 0.6f +
+    return text.length * getCategoryFontSize().value.dp * 0.7f +
             outerPaddingHorizontal * 2 + innerPaddingHorizontal * 2
 }

@@ -2,6 +2,8 @@ package com.incetro.quotebook.presentation.userstory.quote.quote
 
 import androidx.lifecycle.SavedStateHandle
 import com.incetro.quotebook.common.navigation.AppRouter
+import com.incetro.quotebook.entity.quote.Author
+import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.interactor.QuoteInteractor
 import com.incetro.quotebook.presentation.base.messageshowing.SideEffect
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModel
@@ -13,6 +15,7 @@ import com.incetro.quotebook.presentation.base.mvvm.viewmodel.ViewModelAssistedF
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import org.joda.time.DateTime
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -54,8 +57,36 @@ class QuoteViewModel @AssistedInject constructor(
         reduce { state.copy(content = content) }
     }
 
+    fun onQuoteAuthorInput(authorName: String) = intent {
+        reduce { state.copy(authorName = authorName) }
+    }
+
+    fun onQuoteSourceInput(source: String) = intent {
+        reduce { state.copy(source = source) }
+    }
+
+    fun onRefreshCategoriesClick() {
+
+    }
+
+    fun onChangeBackgroundClick() {
+
+    }
+
     override fun onBackPressed() {
-        router.exit()
+        intent {
+            quoteInteractor.updateQuote(
+                Quote(
+                    id = state.quoteId,
+                    content = state.content,
+                    source = state.source,
+                    categories = state.categories,
+                    author = Author(name = state.authorName),
+                    writingDate = DateTime.now(),
+                )
+            )
+            router.exit()
+        }
     }
 
     @AssistedFactory

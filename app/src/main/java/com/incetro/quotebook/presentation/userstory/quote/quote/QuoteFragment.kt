@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -105,7 +106,7 @@ class QuoteFragment : BaseComposeFragment() {
 
                     OutlinedTextField(
                         value = viewState.authorName,
-                        onValueChange = { },
+                        onValueChange = _viewModel::onQuoteAuthorInput,
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),
@@ -114,11 +115,17 @@ class QuoteFragment : BaseComposeFragment() {
 
                     OutlinedTextField(
                         value = viewState.source,
-                        onValueChange = { },
+                        onValueChange = _viewModel::onQuoteSourceInput,
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),
                         label = { Text(text = "Source") }
+                    )
+
+                    Text(
+                        text = "Categories",
+                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+                        style = MaterialTheme.typography.titleMedium
                     )
 
                     FlowRow(
@@ -136,10 +143,10 @@ class QuoteFragment : BaseComposeFragment() {
                         .padding(vertical = 32.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    OutlinedButton(onClick = { /*TODO*/ }) {
+                    OutlinedButton(onClick = _viewModel::onRefreshCategoriesClick) {
                         Text("Refresh categories")
                     }
-                    OutlinedButton(onClick = { /*TODO*/ }) {
+                    OutlinedButton(onClick = _viewModel::onChangeBackgroundClick) {
                         Text("Change background")
                     }
                 }
