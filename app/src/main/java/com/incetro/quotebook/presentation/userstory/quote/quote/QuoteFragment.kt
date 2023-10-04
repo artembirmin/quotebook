@@ -21,6 +21,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,6 @@ class QuoteFragment : BaseComposeFragment() {
 
     override fun release() = Unit
 
-    @Preview
     @Composable
     override fun CreateView() {
         val viewState: QuoteFragmentViewState by _viewModel.collectAsState()
@@ -68,16 +68,13 @@ class QuoteFragment : BaseComposeFragment() {
     @Composable
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
     private fun QuoteInfo(viewState: QuoteFragmentViewState) {
+        val onBackPressed = remember(_viewModel) { { _viewModel.onBackPressed() } }
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = {
-                        Text(
-                            text = "Цитатникъ"
-                        )
-                    },
+                    title = { },
                     navigationIcon = {
-                        IconButton(onClick = { _viewModel.onBackPressed() }) {
+                        IconButton(onClick = onBackPressed) {
                             Icon(
                                 Icons.Default.ArrowBack,
                                 "Back"
@@ -99,7 +96,7 @@ class QuoteFragment : BaseComposeFragment() {
                         .fillMaxWidth()
                 ) {
                     OutlinedTextField(value = viewState.content,
-                        onValueChange = { },
+                        onValueChange = _viewModel::onQuoteContentInput,
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),
