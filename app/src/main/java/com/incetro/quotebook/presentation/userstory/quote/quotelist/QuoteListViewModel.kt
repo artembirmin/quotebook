@@ -8,12 +8,15 @@ package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
 import androidx.lifecycle.SavedStateHandle
 import com.incetro.quotebook.common.navigation.AppRouter
+import com.incetro.quotebook.common.navigation.Screens
+import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.interactor.QuoteInteractor
 import com.incetro.quotebook.presentation.base.messageshowing.SideEffect
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModel
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.INITIAL_STATE_KEY
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.ViewModelAssistedFactory
+import com.incetro.quotebook.presentation.userstory.quote.quote.QuoteFragmentViewState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -62,6 +65,16 @@ class QuoteListViewModel @AssistedInject constructor(
 
     override fun onBackPressed() {
         router.exit()
+    }
+
+    fun onQuoteClick(quote: Quote) {
+        router.navigateTo(
+            Screens.QuoteScreen(
+                QuoteFragmentViewState(
+                    quoteId = quote.id
+                )
+            )
+        )
     }
 
     @AssistedFactory

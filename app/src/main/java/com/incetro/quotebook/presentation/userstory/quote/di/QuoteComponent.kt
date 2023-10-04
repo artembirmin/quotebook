@@ -10,6 +10,7 @@ import com.incetro.quotebook.common.di.activity.ActivityComponent
 import com.incetro.quotebook.common.di.componentmanager.ComponentManager
 import com.incetro.quotebook.common.di.componentmanager.ComponentsManager
 import com.incetro.quotebook.common.di.scope.FeatureScope
+import com.incetro.quotebook.presentation.userstory.quote.quote.QuoteFragment
 import com.incetro.quotebook.presentation.userstory.quote.quotelist.QuoteListFragment
 import dagger.Component
 
@@ -22,6 +23,7 @@ import dagger.Component
 )
 interface QuoteComponent {
     fun inject(quoteListFragment: QuoteListFragment)
+    fun inject(quoteListFragment: QuoteFragment)
 
     @Component.Builder
     interface Builder {

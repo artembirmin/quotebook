@@ -9,15 +9,21 @@
 package com.incetro.quotebook.common.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import com.incetro.quotebook.presentation.userstory.quote.quote.QuoteFragment
+import com.incetro.quotebook.presentation.userstory.quote.quote.QuoteFragmentViewState
 import com.incetro.quotebook.presentation.userstory.quote.quotelist.QuoteListFragment
-import com.incetro.quotebook.presentation.userstory.quote.quotelist.QuoteListViewState
 
 /**
  * App screens for navigation with Cicerone.
  */
 object Screens {
-    fun DemoScreen(): FragmentScreen =
+    fun QuoteListFragment(): FragmentScreen =
         FragmentScreen() {
             QuoteListFragment.newInstance()
+        }
+
+    fun QuoteScreen(initParams: QuoteFragmentViewState): FragmentScreen =
+        FragmentScreen() {
+            QuoteFragment.newInstance(initParams)
         }
 }

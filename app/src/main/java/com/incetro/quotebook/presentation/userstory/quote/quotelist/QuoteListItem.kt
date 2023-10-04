@@ -6,6 +6,7 @@
 
 package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,8 +28,10 @@ import com.incetro.quotebook.entity.quote.Quote
 import org.joda.time.DateTime
 
 @Composable
-fun QuoteListItem(quote: Quote) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+fun QuoteListItem(quote: Quote, onClick: (Quote) -> Unit) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .clickable { onClick(quote) }) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +86,7 @@ fun QuoteListItemPreview() {
                 Category(2, "Ronnie"),
             )
         )
-    )
+    ) { }
 }
 
 @Preview

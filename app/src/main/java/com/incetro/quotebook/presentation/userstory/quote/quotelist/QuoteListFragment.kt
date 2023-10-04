@@ -116,7 +116,7 @@ class QuoteListFragment : BaseComposeFragment() {
                             viewState.quiteItems
                         }
                         items(items = quotes, key = { it.id }) { quote ->
-                            QuoteListItem(quote = quote)
+                            QuoteListItem(quote = quote, onClick = _viewModel::onQuoteClick)
                         }
                         item {
                             Spacer(

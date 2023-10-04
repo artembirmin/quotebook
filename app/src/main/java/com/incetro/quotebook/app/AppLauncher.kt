@@ -48,6 +48,6 @@ class AppLauncher @Inject constructor(
             }
         }
 
-        router.newRootScreen(Screens.DemoScreen())
+        router.newRootScreen(Screens.QuoteListFragment())
     }
 }
