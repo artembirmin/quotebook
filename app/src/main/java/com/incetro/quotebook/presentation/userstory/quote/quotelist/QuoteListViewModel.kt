@@ -77,6 +77,10 @@ class QuoteListViewModel @AssistedInject constructor(
         )
     }
 
+    fun onCreateNewQuoteClick() {
+
+    }
+
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<QuoteListViewModel> {
         override fun create(handle: SavedStateHandle): QuoteListViewModel

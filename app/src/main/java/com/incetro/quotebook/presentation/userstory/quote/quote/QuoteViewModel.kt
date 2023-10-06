@@ -1,5 +1,6 @@
 package com.incetro.quotebook.presentation.userstory.quote.quote
 
+
 import androidx.lifecycle.SavedStateHandle
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.entity.quote.Author
@@ -8,8 +9,6 @@ import com.incetro.quotebook.model.interactor.QuoteInteractor
 import com.incetro.quotebook.presentation.base.messageshowing.SideEffect
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModel
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
-
-
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.INITIAL_STATE_KEY
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.ViewModelAssistedFactory
 import dagger.assisted.Assisted

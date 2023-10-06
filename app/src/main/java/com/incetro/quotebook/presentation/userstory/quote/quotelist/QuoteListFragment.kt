@@ -20,7 +20,11 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -64,93 +68,14 @@ class QuoteListFragment : BaseComposeFragment() {
     @Composable
     override fun CreateView() {
         val viewState: QuoteListViewState by _viewModel.collectAsState()
-        Screen(viewState)
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-    @Composable
-    fun Screen(viewState: QuoteListViewState) {
         AppTheme {
-            val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-            Scaffold(
-                // https://issuetracker.google.com/issues/249727298
-                contentWindowInsets = WindowInsets(0, 0, 0, 0),
-                modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .imePadding(),
-                topBar = {
-                    LargeTopAppBar(
-                        title = {
-                            Text(
-                                text = "Цитатникъ"
-                            )
-                        },
-                        scrollBehavior = scrollBehavior
-                    )
-                }
-            ) { innerPadding ->
-                Column(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .consumeWindowInsets(innerPadding)
-                        .systemBarsPadding()
-                ) {
-                    SearchTextField(
-                        search = viewState.searchQuery,
-                        onValueChange = _viewModel::onSearch,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                    LazyColumn(
-                        modifier = Modifier.imePadding(),
-                        contentPadding = PaddingValues(
-                            start = 8.dp,
-                            top = 8.dp,
-                            end = 8.dp,
-                            bottom = 16.dp
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        val quotes = if (viewState.searchQuery.isNotBlank()) {
-                            viewState.searchResult
-                        } else {
-                            viewState.quiteItems
-                        }
-                        items(items = quotes, key = { it.id }) { quote ->
-                            QuoteListItem(quote = quote, onClick = _viewModel::onQuoteClick)
-                        }
-                        item {
-                            Spacer(
-                                Modifier.windowInsetsBottomHeight(
-                                    WindowInsets.ime
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Preview
-    @Composable
-    fun ScreenPreview() {
-        val date = DateTime.now()
-        val author = Author(name = "Author Name")
-        val quote =
-            "composables provide support for displaying items in a grid. A Lazy vertical grid will display its items in a vertically scrollable container, spanned across multiple columns, while the Lazy horizontal grids will have the same behaviour on the horizontal axis."
-        Screen(
-            viewState = QuoteListViewState().copy(
-                quiteItems = listOf(
-                    Quote(id = 0, content = quote.take(10), author = author, writingDate = date),
-                    Quote(id = 2, content = quote.take(20), author = author, writingDate = date),
-                    Quote(id = 3, content = quote.take(30), author = author, writingDate = date),
-                    Quote(id = 4, content = quote.take(40), author = author, writingDate = date),
-                    Quote(id = 5, content = quote.take(50), author = author, writingDate = date),
-                    Quote(id = 6, content = quote.take(60), author = author, writingDate = date),
-                    Quote(id = 7, content = quote.take(70), author = author, writingDate = date),
-                )
+            QuoteListContent(
+                viewState = viewState,
+                fabClickListener = _viewModel::onCreateNewQuoteClick,
+                onSearch = _viewModel::onSearch,
+                onQuoteClick = _viewModel::onQuoteClick,
             )
-        )
+        }
     }
 
     override fun onBackPressed() {
@@ -160,4 +85,103 @@ class QuoteListFragment : BaseComposeFragment() {
     companion object {
         fun newInstance() = QuoteListFragment()
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+private fun QuoteListContent(
+    fabClickListener: () -> Unit,
+    viewState: QuoteListViewState,
+    onSearch: (String) -> Unit,
+    onQuoteClick: (Quote) -> Unit
+) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        // https://issuetracker.google.com/issues/249727298
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .imePadding(),
+        topBar = {
+            LargeTopAppBar(
+                title = {
+                    Text(
+                        text = "Цитатникъ"
+                    )
+                },
+                scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = fabClickListener,
+                modifier = Modifier
+                    .systemBarsPadding()
+            ) {
+                Icon(Icons.Filled.Add, "Floating action button.")
+            }
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .consumeWindowInsets(innerPadding)
+                .systemBarsPadding()
+        ) {
+            SearchTextField(
+                search = viewState.searchQuery,
+                onValueChange = onSearch,
+                modifier = Modifier.padding(8.dp)
+            )
+            LazyColumn(
+                modifier = Modifier.imePadding(),
+                contentPadding = PaddingValues(
+                    start = 8.dp,
+                    top = 8.dp,
+                    end = 8.dp,
+                    bottom = 16.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                val quotes = if (viewState.searchQuery.isNotBlank()) {
+                    viewState.searchResult
+                } else {
+                    viewState.quiteItems
+                }
+                items(items = quotes, key = { it.id }) { quote ->
+                    QuoteListItem(quote = quote, onClick = onQuoteClick)
+                }
+                item {
+                    Spacer(
+                        Modifier.windowInsetsBottomHeight(
+                            WindowInsets.ime
+                        )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun QuoteListPreview() {
+    val date = DateTime.now()
+    val author = Author(name = "Author Name")
+    val quote =
+        "composables provide support for displaying items in a grid. A Lazy vertical grid will display its items in a vertically scrollable container, spanned across multiple columns, while the Lazy horizontal grids will have the same behaviour on the horizontal axis."
+    QuoteListContent(
+        viewState = QuoteListViewState().copy(
+            quiteItems = listOf(
+                Quote(id = 0, content = quote.take(10), author = author, writingDate = date),
+                Quote(id = 2, content = quote.take(20), author = author, writingDate = date),
+                Quote(id = 3, content = quote.take(30), author = author, writingDate = date),
+                Quote(id = 4, content = quote.take(40), author = author, writingDate = date),
+                Quote(id = 5, content = quote.take(50), author = author, writingDate = date),
+                Quote(id = 6, content = quote.take(60), author = author, writingDate = date),
+                Quote(id = 7, content = quote.take(70), author = author, writingDate = date),
+            )
+        ),
+        fabClickListener = {}, onSearch = {}, onQuoteClick = {},
+    )
 }

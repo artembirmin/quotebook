@@ -22,7 +22,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,102 +61,128 @@ class QuoteFragment : BaseComposeFragment() {
     override fun CreateView() {
         val viewState: QuoteFragmentViewState by _viewModel.collectAsState()
         AppTheme {
-            QuoteInfo(viewState)
+            QuoteInfoContent(
+                viewState,
+                onBackPressed = _viewModel::onBackPressed,
+                onQuoteContentInput = _viewModel::onQuoteSourceInput,
+                onQuoteAuthorInput = _viewModel::onQuoteAuthorInput,
+                onQuoteSourceInput = _viewModel::onQuoteSourceInput,
+                onRefreshCategoriesClick = _viewModel::onRefreshCategoriesClick,
+                onChangeBackgroundClick = _viewModel::onChangeBackgroundClick
+            )
         }
     }
 
-    @Composable
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-    private fun QuoteInfo(viewState: QuoteFragmentViewState) {
-        val onBackPressed = remember(_viewModel) { { _viewModel.onBackPressed() } }
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { },
-                    navigationIcon = {
-                        IconButton(onClick = onBackPressed) {
-                            Icon(
-                                Icons.Default.ArrowBack,
-                                "Back"
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors()
-                )
-            }
-        ) { innerPadding ->
+    override fun onBackPressed() {
+        _viewModel.onBackPressed()
+    }
+
+    companion object {
+        fun newInstance(initialState: QuoteFragmentViewState) =
+            QuoteFragment().provideInitParams(initialState) as QuoteFragment
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+private fun QuoteInfoContent(
+    viewState: QuoteFragmentViewState,
+    onBackPressed: () -> Unit,
+    onQuoteContentInput: (String) -> Unit,
+    onQuoteAuthorInput: (String) -> Unit,
+    onQuoteSourceInput: (String) -> Unit,
+    onRefreshCategoriesClick: () -> Unit,
+    onChangeBackgroundClick: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { },
+                navigationIcon = {
+                    IconButton(onClick = onBackPressed) {
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            "Back"
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors()
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
             Column(
                 modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .fillMaxWidth()
             ) {
-                Column(
+                OutlinedTextField(value = viewState.content,
+                    onValueChange = onQuoteContentInput,
                     modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    OutlinedTextField(value = viewState.content,
-                        onValueChange = _viewModel::onQuoteContentInput,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        label = { Text(text = "Quote") }
-                    )
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = { Text(text = "Quote") }
+                )
 
-                    OutlinedTextField(
-                        value = viewState.authorName,
-                        onValueChange = _viewModel::onQuoteAuthorInput,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        label = { Text(text = "Author") }
-                    )
+                OutlinedTextField(
+                    value = viewState.authorName,
+                    onValueChange = onQuoteAuthorInput,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = { Text(text = "Author") }
+                )
 
-                    OutlinedTextField(
-                        value = viewState.source,
-                        onValueChange = _viewModel::onQuoteSourceInput,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        label = { Text(text = "Source") }
-                    )
+                OutlinedTextField(
+                    value = viewState.source,
+                    onValueChange = onQuoteSourceInput,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = { Text(text = "Source") }
+                )
 
-                    Text(
-                        text = "Categories",
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                Text(
+                    text = "Categories",
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
 
-                    FlowRow(
-                        Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
-                    ) {
-                        viewState.categories.forEach { CategoryItem(categoryName = it.name) }
-                    }
-                }
-
-                Row(
+                FlowRow(
                     Modifier
+                        .padding(8.dp)
                         .fillMaxWidth()
-                        .padding(vertical = 32.dp),
-                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    OutlinedButton(onClick = _viewModel::onRefreshCategoriesClick) {
-                        Text("Refresh categories")
-                    }
-                    OutlinedButton(onClick = _viewModel::onChangeBackgroundClick) {
-                        Text("Change background")
-                    }
+                    viewState.categories.forEach { CategoryItem(categoryName = it.name) }
+                }
+            }
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 32.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                OutlinedButton(onClick = onRefreshCategoriesClick) {
+                    Text("Refresh categories")
+                }
+                OutlinedButton(onClick = onChangeBackgroundClick) {
+                    Text("Change background")
                 }
             }
         }
     }
+}
 
-    @Preview
-    @Composable
-    fun QuoteInfoPreview() {
-        QuoteInfo(
+@Preview
+@Composable
+fun QuoteInfoPreview() {
+    AppTheme {
+        QuoteInfoContent(
             viewState = QuoteFragmentViewState(
                 quoteId = 5369,
                 content = "augue",
@@ -169,16 +194,13 @@ class QuoteFragment : BaseComposeFragment() {
                 ),
                 source = "",
                 dateTime = DateTime.now(),
-            )
+            ),
+            onBackPressed = {},
+            onQuoteContentInput = {},
+            onQuoteAuthorInput = {},
+            onQuoteSourceInput = {},
+            onRefreshCategoriesClick = {},
+            onChangeBackgroundClick = {},
         )
-    }
-
-    override fun onBackPressed() {
-        _viewModel.onBackPressed()
-    }
-
-    companion object {
-        fun newInstance(initialState: QuoteFragmentViewState) =
-            QuoteFragment().provideInitParams(initialState) as QuoteFragment
     }
 }
