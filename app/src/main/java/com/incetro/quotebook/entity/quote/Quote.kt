@@ -16,7 +16,7 @@ data class Quote(
     val id: Long = 0,
     val content: String = "",
     val source: String = "",
-    val author: Author? = null,
+    val author: Author = Author(),
     val writingDate: DateTime,
     val categories: List<Category> = emptyList(),
 ) : Parcelable {
@@ -25,7 +25,7 @@ data class Quote(
         id = id,
         content = content,
         source = source,
-        authorId = author?.id,
+        authorId = author.id,
         writingDate = writingDate ?: this.writingDate
     )
 }

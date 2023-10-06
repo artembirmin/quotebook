@@ -17,7 +17,7 @@ import org.joda.time.DateTime
 
 @Parcelize
 data class QuoteFragmentViewState(
-    val quoteId: Long = 0,
+    val quoteId: Long? = null,
     val content: String = "",
     val authorName: String = "",
     val categories: List<Category> = emptyList(),

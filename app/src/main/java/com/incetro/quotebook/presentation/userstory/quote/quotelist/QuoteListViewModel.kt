@@ -78,7 +78,13 @@ class QuoteListViewModel @AssistedInject constructor(
     }
 
     fun onCreateNewQuoteClick() {
-
+        router.navigateTo(
+            Screens.QuoteScreen(
+                QuoteFragmentViewState(
+                    quoteId = null
+                )
+            )
+        )
     }
 
     @AssistedFactory

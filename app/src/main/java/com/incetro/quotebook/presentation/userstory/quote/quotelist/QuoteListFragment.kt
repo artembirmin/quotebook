@@ -23,14 +23,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
@@ -88,7 +89,10 @@ class QuoteListFragment : BaseComposeFragment() {
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalComposeUiApi::class
+)
 private fun QuoteListContent(
     fabClickListener: () -> Unit,
     viewState: QuoteListViewState,
@@ -101,7 +105,7 @@ private fun QuoteListContent(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .imePadding(),
+            .systemBarsPadding(),
         topBar = {
             LargeTopAppBar(
                 title = {
@@ -113,10 +117,9 @@ private fun QuoteListContent(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            LargeFloatingActionButton(
                 onClick = fabClickListener,
                 modifier = Modifier
-                    .systemBarsPadding()
             ) {
                 Icon(Icons.Filled.Add, "Floating action button.")
             }
@@ -126,7 +129,6 @@ private fun QuoteListContent(
             modifier = Modifier
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
-                .systemBarsPadding()
         ) {
             SearchTextField(
                 search = viewState.searchQuery,

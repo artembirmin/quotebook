@@ -26,9 +26,11 @@ import com.incetro.quotebook.entity.quote.Author
 import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import org.joda.time.DateTime
+import timber.log.Timber
 
 @Composable
 fun QuoteListItem(quote: Quote, onClick: (Quote) -> Unit) {
+    Timber.e("quoteAuthor = ${quote.author}")
     Card(modifier = Modifier
         .fillMaxWidth()
         .clickable { onClick(quote) }) {
@@ -38,13 +40,13 @@ fun QuoteListItem(quote: Quote, onClick: (Quote) -> Unit) {
                 .padding(16.dp)
         ) {
             Text(
-                text = quote.content,
+                text = quote.content.ifBlank { "Здесь могла быть ваша цитата" },
                 modifier = Modifier.padding(bottom = 8.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = quote.author?.name ?: "Неизвестен",
+                text = quote.author.name.ifBlank { "Неизвестен" },
                 modifier = Modifier.align(Alignment.End),
                 textAlign = TextAlign.Left,
                 fontStyle = FontStyle.Italic

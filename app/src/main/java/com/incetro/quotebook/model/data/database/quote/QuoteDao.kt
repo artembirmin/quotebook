@@ -23,6 +23,6 @@ interface QuoteDao : BaseDao<QuoteDto> {
     suspend fun deleteQuoteById(id: Long)
 
     @Transaction
-    @Query("SELECT * FROM ${QuoteDto.TABLE_NAME}")
+    @Query("SELECT * FROM ${QuoteDto.TABLE_NAME} ORDER BY writingDate DESC")
     fun observeQuotes(): Flow<List<QuoteWithAuthorAndCategories>>
 }

@@ -39,12 +39,17 @@ class QuoteViewModel @AssistedInject constructor(
         )
 
     fun showQuote() = intent {
-        val quote = quoteInteractor.getQuote(state.quoteId)
+        val quoteId = state.quoteId
+        val quote = if (quoteId == null) {
+            quoteInteractor.createEmptyQuote()
+        } else {
+            quoteInteractor.getQuote(quoteId)
+        }
         reduce {
             state.copy(
                 quoteId = quote.id,
                 content = quote.content,
-                authorName = quote.author?.name ?: "",
+                authorName = quote.author.name,
                 categories = quote.categories,
                 source = quote.source,
                 dateTime = quote.writingDate
@@ -76,7 +81,7 @@ class QuoteViewModel @AssistedInject constructor(
         intent {
             quoteInteractor.updateQuote(
                 Quote(
-                    id = state.quoteId,
+                    id = state.quoteId ?: 0,
                     content = state.content,
                     source = state.source,
                     categories = state.categories,

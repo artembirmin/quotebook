@@ -89,10 +89,12 @@ class QuoteInteractorInstrumentedTest {
                 quoteFactory.getQuote(),
             )
             quoteInteractor.addQuotes(quotes)
-            val addedQuotes = quoteInteractor.observeQuotes().first()
+            val addedQuotes = quoteInteractor.observeQuotes().first().sortedBy { it.writingDate }
             val contentCompare = quotes.mapIndexed { index, quote ->
+                println("index = $index quote = $quote,\n addedQuote = ${addedQuotes[index]}")
                 compareQuotesContent(
-                    quote,
+                    quote.copy(
+                        categories = quote.categories.toMutableList().distinctBy { it.name }),
                     addedQuotes[index]
                 )
             }
@@ -141,7 +143,7 @@ class QuoteInteractorInstrumentedTest {
             val editedQuote = existsQuote.copy(
                 content = "",
                 source = "",
-                author = null,
+                author = Author(name = ""),
                 writingDate = DateTime.now(),
                 categories = emptyList()
             )
@@ -175,10 +177,13 @@ class QuoteInteractorInstrumentedTest {
     private fun compareQuotesContent(
         editedQuote: Quote,
         editedQuoteFromDb: Quote
-    ) = (editedQuote.content == editedQuoteFromDb.content
-            && editedQuote.source == editedQuoteFromDb.source
-            && editedQuote.categories compareNamesWith editedQuoteFromDb.categories
-            && editedQuote.author?.name == editedQuoteFromDb.author?.name)
+    ): Boolean {
+        Assert.assertEquals(editedQuote.content, editedQuoteFromDb.content)
+        Assert.assertEquals(editedQuote.source, editedQuoteFromDb.source)
+        Assert.assertTrue(editedQuote.categories compareNamesWith editedQuoteFromDb.categories)
+        Assert.assertEquals(editedQuote.author.name, editedQuoteFromDb.author.name)
+        return true
+    }
 
     private infix fun List<Category>.compareNamesWith(categories: List<Category>): Boolean {
         if (this.size != categories.size) return false

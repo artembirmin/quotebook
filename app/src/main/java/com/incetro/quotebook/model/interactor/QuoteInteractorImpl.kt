@@ -23,7 +23,9 @@ class QuoteInteractorImpl @Inject constructor(
 ) : QuoteInteractor {
 
     override suspend fun createEmptyQuote(): Quote {
-        return quoteRepository.createNewQuote()
+        val newQuote = quoteRepository.createNewQuote()
+        val author = authorRepository.updateAuthor(author = newQuote.author)
+        return quoteRepository.updateQuote(newQuote.copy(author = author))
     }
 
     override suspend fun observeQuotes(): Flow<List<Quote>> {

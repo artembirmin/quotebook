@@ -64,9 +64,9 @@ class QuoteFragment : BaseComposeFragment() {
             QuoteInfoContent(
                 viewState,
                 onBackPressed = _viewModel::onBackPressed,
-                onQuoteContentInput = _viewModel::onQuoteSourceInput,
-                onQuoteAuthorInput = _viewModel::onQuoteAuthorInput,
-                onQuoteSourceInput = _viewModel::onQuoteSourceInput,
+                onContentInput = _viewModel::onQuoteContentInput,
+                onAuthorInput = _viewModel::onQuoteAuthorInput,
+                onSourceInput = _viewModel::onQuoteSourceInput,
                 onRefreshCategoriesClick = _viewModel::onRefreshCategoriesClick,
                 onChangeBackgroundClick = _viewModel::onChangeBackgroundClick
             )
@@ -88,9 +88,9 @@ class QuoteFragment : BaseComposeFragment() {
 private fun QuoteInfoContent(
     viewState: QuoteFragmentViewState,
     onBackPressed: () -> Unit,
-    onQuoteContentInput: (String) -> Unit,
-    onQuoteAuthorInput: (String) -> Unit,
-    onQuoteSourceInput: (String) -> Unit,
+    onContentInput: (String) -> Unit,
+    onAuthorInput: (String) -> Unit,
+    onSourceInput: (String) -> Unit,
     onRefreshCategoriesClick: () -> Unit,
     onChangeBackgroundClick: () -> Unit
 ) {
@@ -121,7 +121,7 @@ private fun QuoteInfoContent(
                     .fillMaxWidth()
             ) {
                 OutlinedTextField(value = viewState.content,
-                    onValueChange = onQuoteContentInput,
+                    onValueChange = onContentInput,
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
@@ -130,7 +130,7 @@ private fun QuoteInfoContent(
 
                 OutlinedTextField(
                     value = viewState.authorName,
-                    onValueChange = onQuoteAuthorInput,
+                    onValueChange = onAuthorInput,
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
@@ -139,7 +139,7 @@ private fun QuoteInfoContent(
 
                 OutlinedTextField(
                     value = viewState.source,
-                    onValueChange = onQuoteSourceInput,
+                    onValueChange = onSourceInput,
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
@@ -196,9 +196,9 @@ fun QuoteInfoPreview() {
                 dateTime = DateTime.now(),
             ),
             onBackPressed = {},
-            onQuoteContentInput = {},
-            onQuoteAuthorInput = {},
-            onQuoteSourceInput = {},
+            onContentInput = {},
+            onAuthorInput = {},
+            onSourceInput = {},
             onRefreshCategoriesClick = {},
             onChangeBackgroundClick = {},
         )
