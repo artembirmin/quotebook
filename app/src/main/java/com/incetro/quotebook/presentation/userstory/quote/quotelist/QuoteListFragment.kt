@@ -128,6 +128,7 @@ private fun QuoteListContent(
             modifier = Modifier
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
+                .imePadding()
         ) {
             SearchTextField(
                 search = viewState.searchQuery,
@@ -152,13 +153,13 @@ private fun QuoteListContent(
                 items(items = quotes, key = { it.id }) { quote ->
                     QuoteListItem(quote = quote, onClick = onQuoteClick)
                 }
-                item {
-                    Spacer(
-                        Modifier.windowInsetsBottomHeight(
-                            WindowInsets.ime
-                        )
-                    )
-                }
+//                item {
+//                    Spacer(
+//                        Modifier.windowInsetsBottomHeight(
+//                            WindowInsets.ime
+//                        )
+//                    )
+//                }
             }
         }
     }

@@ -17,11 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.incetro.quotebook.R
 import com.incetro.quotebook.entity.quote.Author
 import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
@@ -40,13 +42,13 @@ fun QuoteListItem(quote: Quote, onClick: (Quote) -> Unit) {
                 .padding(16.dp)
         ) {
             Text(
-                text = quote.content.ifBlank { "Здесь могла быть ваша цитата" },
+                text = quote.content.ifBlank { stringResource(id = R.string.quote_empty_content) },
                 modifier = Modifier.padding(bottom = 8.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = quote.author.name.ifBlank { "Неизвестен" },
+                text = quote.author.name.ifBlank { stringResource(id = R.string.quote_unknown_author) },
                 modifier = Modifier.align(Alignment.End),
                 textAlign = TextAlign.Left,
                 fontStyle = FontStyle.Italic

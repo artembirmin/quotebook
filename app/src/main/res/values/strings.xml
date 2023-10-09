@@ -21,4 +21,7 @@
     <string name="quote_author_name_hint">Author</string>
     <string name="quote_source_hint">Source</string>
 
+    <string name="quote_empty_content">There could be a quote from you here</string>
+    <string name="quote_unknown_author">Unknown</string>
+
 </resources>
