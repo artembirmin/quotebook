@@ -23,8 +23,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.incetro.quotebook.R
 import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.presentation.base.mvvm.view.BaseComposeFragment
 import com.incetro.quotebook.presentation.base.mvvm.view.getInitParams
@@ -146,18 +148,29 @@ private fun QuoteInfoContent(
                     label = { Text(text = "Source") }
                 )
 
-                Text(
-                    text = "Categories",
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
-                    style = MaterialTheme.typography.titleMedium
-                )
+                if (viewState.categories.isNotEmpty() || viewState.categoriesLoading) {
+                    Text(
+                        text = "Categories",
+                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
 
-                FlowRow(
-                    Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    viewState.categories.forEach { CategoryItem(categoryName = it.name) }
+                if (viewState.categoriesLoading) {
+                    Text(
+                        text = stringResource(id = R.string.quote_categories_loading_title),
+                        modifier = Modifier.padding(8.dp),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                } else {
+                    FlowRow(
+                        Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+                        viewState.categories.forEach { CategoryItem(categoryName = it.name) }
+                    }
                 }
             }
 

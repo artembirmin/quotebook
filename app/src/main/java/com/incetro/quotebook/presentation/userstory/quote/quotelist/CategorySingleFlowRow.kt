@@ -7,6 +7,7 @@
 package com.incetro.quotebook.presentation.userstory.quote.quotelist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -76,7 +77,8 @@ fun CategoryFlowRow(categoryNameList: List<String>, modifier: Modifier = Modifie
                 .onGloballyPositioned { layoutInfo ->
                     totalWidthPx = layoutInfo.size.width
                 }
-        )
+        ),
+        horizontalArrangement = Arrangement.spacedBy(outerPaddingHorizontal)
 
     ) {
         val totalWidthDp = totalWidthPx.pxToDp()
@@ -94,14 +96,14 @@ fun CategoryFlowRow(categoryNameList: List<String>, modifier: Modifier = Modifie
     }
 }
 
-private val outerPaddingHorizontal = 6.dp
+private val outerPaddingHorizontal = 8.dp
 private val innerPaddingHorizontal = 6.dp
 
 @Composable
 fun CategoryItem(categoryName: String) {
     Box(
         modifier = Modifier
-            .padding(horizontal = outerPaddingHorizontal)
+            .padding(bottom = 4.dp)
             .background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = ShapeDefaults.Small
