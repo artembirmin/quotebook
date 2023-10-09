@@ -6,6 +6,8 @@
 
 package com.incetro.quotebook.model.interactor
 
+import com.incetro.quotebook.entity.quote.Author
+import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.repository.author.AuthorRepository
 import com.incetro.quotebook.model.repository.category.CategoryRepository
@@ -23,9 +25,9 @@ class QuoteInteractorImpl @Inject constructor(
 ) : QuoteInteractor {
 
     override suspend fun createEmptyQuote(): Quote {
-        val newQuote = quoteRepository.createNewQuote()
-        val author = authorRepository.updateAuthor(author = newQuote.author)
-        return quoteRepository.updateQuote(newQuote.copy(author = author))
+        val emptyAuthor = authorRepository.updateOrCreateAuthor(author = Author())
+        val newQuote = quoteRepository.createNewQuote(emptyAuthorId = emptyAuthor.id)
+        return quoteRepository.updateQuote(newQuote.copy(author = emptyAuthor))
     }
 
     override suspend fun observeQuotes(): Flow<List<Quote>> {
@@ -40,7 +42,7 @@ class QuoteInteractorImpl @Inject constructor(
     }
 
     override suspend fun addQuote(newQuote: Quote) {
-        val author = authorRepository.updateAuthor(author = newQuote.author)
+        val author = authorRepository.updateOrCreateAuthor(author = newQuote.author)
         val quoteId = quoteRepository.addQuote(newQuote.copy(author = author))
         categoryRepository.updateCategories(
             quoteId = quoteId,
@@ -49,7 +51,8 @@ class QuoteInteractorImpl @Inject constructor(
     }
 
     override suspend fun updateQuote(quote: Quote): Quote {
-        val author = authorRepository.updateAuthor(author = quote.author)
+        Timber.e("updateQuote quote = $quote")
+        val author = authorRepository.updateOrCreateAuthor(author = quote.author)
         categoryRepository.updateCategories(quoteId = quote.id, editedCategories = quote.categories)
         return quoteRepository.updateQuote(quote.copy(author = author))
     }

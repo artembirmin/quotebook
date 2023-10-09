@@ -15,11 +15,13 @@ import com.incetro.quotebook.model.data.database.category.CategoryDto
 
 data class QuoteWithAuthorAndCategories(
     @Embedded val quoteDto: QuoteDto,
+
     @Relation(
         parentColumn = "authorId",
         entityColumn = "id"
     )
     val author: AuthorDto,
+
     @Relation(
         parentColumn = "id",
         entityColumn = "id",

@@ -18,7 +18,7 @@ data class QuoteDto(
     val id: Long = 0,
     val content: String = "",
     val source: String = "",
-    val authorId: Long? = null,
+    val authorId: Long = 0,
     val writingDate: DateTime = DateTime.now(),
 ) {
 

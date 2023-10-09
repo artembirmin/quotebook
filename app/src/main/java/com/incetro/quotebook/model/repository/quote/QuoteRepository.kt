@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuoteRepository {
 
-    suspend fun createNewQuote(): Quote
+    suspend fun createNewQuote(emptyAuthorId: Long): Quote
 
     suspend fun addQuote(quote: Quote): Long
 
