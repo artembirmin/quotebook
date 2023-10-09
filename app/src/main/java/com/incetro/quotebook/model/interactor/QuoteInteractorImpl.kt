@@ -64,4 +64,8 @@ class QuoteInteractorImpl @Inject constructor(
     override suspend fun deleteQuote(quote: Quote) {
         quoteRepository.deleteQuote(quote)
     }
+
+    override suspend fun fetchCategories(quote: Quote): List<Category> {
+        return categoryRepository.fetchCategories(quote)
+    }
 }

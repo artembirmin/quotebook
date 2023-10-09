@@ -17,12 +17,12 @@ class QuoteFactory {
     private val lorem =
         LoremIpsum(50).values.toList()[0].split(" ", "\n", ".", ",").filter { it.isNotBlank() }
 
-    fun getCategory() = listOf<Category>(
-        Category(name = lorem.random()),
-        Category(name = lorem.random()),
-        Category(name = lorem.random()),
-        Category(name = lorem.random()),
-    )
+    fun getCategory(count: Int = 4) =
+        mutableListOf<Category>().apply {
+            repeat(count) {
+                add(Category(name = lorem.random()))
+            }
+        }
 
     fun getAuthor() = Author(name = lorem.random())
 

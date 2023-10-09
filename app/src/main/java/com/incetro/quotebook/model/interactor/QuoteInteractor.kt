@@ -6,6 +6,7 @@
 
 package com.incetro.quotebook.model.interactor
 
+import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import kotlinx.coroutines.flow.Flow
 
@@ -17,4 +18,5 @@ interface QuoteInteractor {
     suspend fun updateQuote(quote: Quote): Quote
     suspend fun getQuote(quoteId: Long): Quote
     suspend fun deleteQuote(quote: Quote)
+    suspend fun fetchCategories(quote: Quote): List<Category>
 }
