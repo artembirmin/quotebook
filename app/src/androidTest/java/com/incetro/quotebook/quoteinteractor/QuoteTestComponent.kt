@@ -7,6 +7,7 @@
 package com.incetro.quotebook.quoteinteractor
 
 import com.incetro.quotebook.common.di.app.module.CommonAppModule
+import com.incetro.quotebook.common.di.app.module.NetworkModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         QuoteTestModule::class,
-        CommonAppModule::class
+        CommonAppModule::class,
+        NetworkModule::class
     ]
 )
 interface QuoteTestComponent {

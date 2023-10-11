@@ -6,8 +6,8 @@
 
 package com.incetro.quotebook.model.interactor
 
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.repository.author.AuthorRepository
 import com.incetro.quotebook.model.repository.category.CategoryRepository

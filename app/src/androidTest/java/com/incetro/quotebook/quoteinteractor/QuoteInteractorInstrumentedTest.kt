@@ -8,8 +8,8 @@ package com.incetro.quotebook.quoteinteractor
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.interactor.QuoteInteractor
 import com.incetro.quotebook.model.repository.quote.QuoteFactory

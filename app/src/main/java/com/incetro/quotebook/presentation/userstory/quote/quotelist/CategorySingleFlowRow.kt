@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import com.incetro.quotebook.entity.quote.Category
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.utils.ext.pxToDp
 
 @Preview

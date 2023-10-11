@@ -7,8 +7,8 @@
 package com.incetro.quotebook.model.repository.quote
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import org.joda.time.DateTime
 

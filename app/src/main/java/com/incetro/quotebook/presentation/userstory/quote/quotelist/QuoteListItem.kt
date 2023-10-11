@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.incetro.quotebook.R
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import org.joda.time.DateTime
 import timber.log.Timber

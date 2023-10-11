@@ -8,7 +8,7 @@ package com.incetro.quotebook.model.data.database.category
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.incetro.quotebook.entity.quote.Category
+import com.incetro.quotebook.entity.category.Category
 
 @Entity(
     tableName = CategoryDto.TABLE_NAME

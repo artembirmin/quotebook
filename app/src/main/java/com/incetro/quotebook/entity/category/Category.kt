@@ -4,7 +4,7 @@
  * Created by artembirmin on 18/9/2023.
  */
 
-package com.incetro.quotebook.entity.quote
+package com.incetro.quotebook.entity.category
 
 import android.os.Parcelable
 import com.incetro.quotebook.model.data.database.category.CategoryDto

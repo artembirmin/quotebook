@@ -6,7 +6,7 @@
 
 package com.incetro.quotebook.model.interactor
 
-import com.incetro.quotebook.entity.quote.Category
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Quote
 import kotlinx.coroutines.flow.Flow
 

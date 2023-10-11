@@ -7,6 +7,7 @@
 package com.incetro.quotebook.entity.quote
 
 import android.os.Parcelable
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.model.data.database.quote.QuoteDto
 import kotlinx.parcelize.Parcelize
 import org.joda.time.DateTime

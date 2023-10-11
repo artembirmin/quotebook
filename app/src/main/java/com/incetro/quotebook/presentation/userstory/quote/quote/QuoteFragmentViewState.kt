@@ -7,8 +7,8 @@
 package com.incetro.quotebook.presentation.userstory.quote.quote
 
 import android.os.Parcelable
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.presentation.base.messageshowing.AlertDialogState
 import com.incetro.quotebook.presentation.base.mvvm.view.LoaderState
