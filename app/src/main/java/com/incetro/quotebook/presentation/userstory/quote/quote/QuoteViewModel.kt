@@ -16,10 +16,13 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
+@OptIn(OrbitExperimental::class)
 class QuoteViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
     private val quoteInteractor: QuoteInteractor,
@@ -57,15 +60,15 @@ class QuoteViewModel @AssistedInject constructor(
         }
     }
 
-    fun onQuoteContentInput(content: String) = intent {
+    fun onQuoteContentInput(content: String) = blockingIntent {
         reduce { state.copy(content = content) }
     }
 
-    fun onQuoteAuthorInput(authorName: String) = intent {
+    fun onQuoteAuthorInput(authorName: String) = blockingIntent {
         reduce { state.copy(authorName = authorName) }
     }
 
-    fun onQuoteSourceInput(source: String) = intent {
+    fun onQuoteSourceInput(source: String) = blockingIntent {
         reduce { state.copy(source = source) }
     }
 

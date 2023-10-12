@@ -14,16 +14,18 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -116,9 +118,10 @@ private fun QuoteListContent(
             )
         },
         floatingActionButton = {
-            LargeFloatingActionButton(
+            FloatingActionButton(
                 onClick = fabClickListener,
-                modifier = Modifier
+                modifier = Modifier.size(68.dp),
+                shape = ShapeDefaults.Large
             ) {
                 Icon(Icons.Filled.Add, "Floating action button.")
             }
@@ -153,13 +156,6 @@ private fun QuoteListContent(
                 items(items = quotes, key = { it.id }) { quote ->
                     QuoteListItem(quote = quote, onClick = onQuoteClick)
                 }
-//                item {
-//                    Spacer(
-//                        Modifier.windowInsetsBottomHeight(
-//                            WindowInsets.ime
-//                        )
-//                    )
-//                }
             }
         }
     }

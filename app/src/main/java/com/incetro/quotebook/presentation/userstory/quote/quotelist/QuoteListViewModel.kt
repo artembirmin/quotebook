@@ -21,6 +21,8 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
@@ -51,15 +53,19 @@ class QuoteListViewModel @AssistedInject constructor(
         }
     }
 
-    fun onSearch(query: String) = intent {
+    @OptIn(OrbitExperimental::class)
+    fun onSearch(query: String) = blockingIntent {
         reduce {
+            state.copy(searchQuery = query)
+        }
+        intent {
             val searchResult = state.quiteItems.filter {
                 it.content.contains(
                     other = query,
                     ignoreCase = true
                 )
             }
-            state.copy(searchQuery = query, searchResult = searchResult)
+            reduce { (state.copy(searchResult = searchResult)) }
         }
     }
 

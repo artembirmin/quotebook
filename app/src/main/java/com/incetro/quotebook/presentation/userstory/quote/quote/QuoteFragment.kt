@@ -191,7 +191,8 @@ private fun QuoteInfoContent(
     }
 }
 
-@Preview
+@Preview(device = "spec:width=900px,height=2340px,dpi=440")
+@Preview()
 @Composable
 fun QuoteInfoPreview() {
     AppTheme {
