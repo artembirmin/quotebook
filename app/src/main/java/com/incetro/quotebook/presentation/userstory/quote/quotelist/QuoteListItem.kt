@@ -42,13 +42,13 @@ fun QuoteListItem(quote: Quote, onClick: (Quote) -> Unit) {
                 .padding(16.dp)
         ) {
             Text(
-                text = quote.content.ifBlank { stringResource(id = R.string.quote_empty_content) },
+                text = quote.content.ifBlank { stringResource(id = R.string.quote_list_empty_content) },
                 modifier = Modifier.padding(bottom = 8.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = quote.author.name.ifBlank { stringResource(id = R.string.quote_unknown_author) },
+                text = quote.author.name.ifBlank { stringResource(id = R.string.quote_list_unknown_author) },
                 modifier = Modifier.align(Alignment.End),
                 textAlign = TextAlign.Left,
                 fontStyle = FontStyle.Italic

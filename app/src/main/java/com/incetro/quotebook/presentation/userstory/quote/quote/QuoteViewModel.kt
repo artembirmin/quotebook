@@ -2,8 +2,11 @@ package com.incetro.quotebook.presentation.userstory.quote.quote
 
 
 import androidx.lifecycle.SavedStateHandle
+import com.incetro.quotebook.R
 import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.model.interactor.QuoteInteractor
+import com.incetro.quotebook.presentation.base.messageshowing.AlertDialogState
+import com.incetro.quotebook.presentation.base.messageshowing.DialogString
 import com.incetro.quotebook.presentation.base.messageshowing.SideEffect
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModel
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
@@ -80,8 +83,32 @@ class QuoteViewModel @AssistedInject constructor(
 
     override fun onBackPressed() {
         intent {
-            quoteInteractor.updateQuote(state.getQuote())
-            router.exit()
+            if (state.categoriesLoading) {
+                reduce {
+                    state.copy(
+                        dialogState = AlertDialogState(
+                            isVisible = true,
+                            title = DialogString.StringResText(R.string.quote_exit_while_categories_fetching_dialog_title),
+                            text = DialogString.StringResText(R.string.quote_exit_while_categories_fetching_dialog_text),
+                            positiveText = R.string.cancel,
+                            negativeText = R.string.exit,
+                            onNegativeClick = {
+                                router.exit()
+                            },
+                            onPositiveClick = {
+                                intent {
+                                    reduce {
+                                        state.copy(dialogState = AlertDialogState(isVisible = false))
+                                    }
+                                }
+                            }
+                        )
+                    )
+                }
+            } else {
+                quoteInteractor.updateQuote(state.getQuote())
+                router.exit()
+            }
         }
     }
 

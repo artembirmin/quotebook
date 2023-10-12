@@ -7,7 +7,11 @@
 <resources>
     <string name="app_name">Quotebook</string>
 
+    <string name="empty" />
     <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_">Continue</string>
+    <string name="exit">Exit</string>
     <string name="search">Search</string>
 
     <string name="error_common_text">"Something went wrong. Check your internet connection and try again later"</string>
@@ -20,8 +24,10 @@
     <string name="quote_content_hint">Quote</string>
     <string name="quote_author_name_hint">Author</string>
     <string name="quote_source_hint">Source</string>
+    <string name="quote_exit_while_categories_fetching_dialog_title">Do you really want out?</string>
+    <string name="quote_exit_while_categories_fetching_dialog_text">The categories are still being uploaded. In case of an exit, it will be stopped</string>
 
-    <string name="quote_empty_content">There could be a quote from you here</string>
-    <string name="quote_unknown_author">Unknown</string>
+    <string name="quote_list_empty_content">There could be a quote from you here</string>
+    <string name="quote_list_unknown_author">Unknown</string>
 
 </resources>

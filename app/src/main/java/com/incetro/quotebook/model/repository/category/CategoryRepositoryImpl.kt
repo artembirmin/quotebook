@@ -88,7 +88,9 @@ class CategoryRepositoryImpl @Inject constructor(
         return try {
             gson
                 .fromJson<List<String>>(categoriesJson, categoriesTypeToken)
-                .map { Category(name = it) }
+                .map { categoryName ->
+                    Category(name = categoryName.replaceFirstChar { it.lowercase() })
+                }
         } catch (e: JsonParseException) {
             if (requestCount == 2) {
                 emptyList()
