@@ -17,23 +17,19 @@ class AuthorRepositoryImpl @Inject constructor(
     private val authorDao: AuthorDao
 ) : AuthorRepository {
 
-    /**
-     * @return author id.
-     */
-    override suspend fun updateAuthor(author: Author?): Author? {
-        val authorId: Long? = if (author?.name == null) {
-            null
-        } else {
-            val currentAuthor: AuthorDto? = authorDao.getAuthorByName(author.name)
-            currentAuthor?.let {
-                authorDao.update(it.copy(name = author.name))
-                currentAuthor.id
-            } ?: authorDao.insert(
-                AuthorDto(
-                    name = author.name
-                )
+
+    override suspend fun updateOrCreateAuthor(author: Author): Author {
+
+        val currentAuthor: AuthorDto? = authorDao.getAuthorByName(author.name)
+        val authorId = currentAuthor?.let {
+            authorDao.update(it.copy(name = author.name))
+            currentAuthor.id
+        } ?: authorDao.insert(
+            AuthorDto(
+                name = author.name
             )
-        }
-        return authorId?.let { authorDao.getAuthorById(it).toAuthor() }
+        )
+
+        return authorDao.getAuthorById(authorId).toAuthor()
     }
 }

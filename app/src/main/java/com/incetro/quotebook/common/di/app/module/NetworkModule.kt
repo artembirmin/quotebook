@@ -12,7 +12,7 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.incetro.quotebook.BuildConfig
 import com.incetro.quotebook.model.data.network.api.CategoryApi
-import com.incetro.quotebook.model.data.network.interceptor.AppInfoInterceptor
+import com.incetro.quotebook.model.data.network.interceptor.GptAuthorizationInterceptor
 import com.incetro.quotebook.utils.FileLoggingTree
 import dagger.Module
 import dagger.Provides
@@ -90,16 +90,17 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    internal fun provideDemoApi(
+    internal fun provideCategoryApi(
         retrofitBuilder: Retrofit.Builder,
         okHttpClientBuilder: OkHttpClient.Builder,
-        appInfoInterceptor: AppInfoInterceptor,
+        gptAuthorizationInterceptor: GptAuthorizationInterceptor,
     ): CategoryApi {
 
         okHttpClientBuilder
-            .addInterceptor(appInfoInterceptor)
+            .addInterceptor(gptAuthorizationInterceptor)
 
         return retrofitBuilder
+            .baseUrl(GPT_URL)
             .client(okHttpClientBuilder.build())
             .build()
             .create(CategoryApi::class.java)
@@ -107,6 +108,7 @@ class NetworkModule {
 
     companion object {
         private const val BASE_URL = BuildConfig.SERVER_URL
+        private const val GPT_URL = "https://api.openai.com/v1/chat/"
         private const val CONNECT_TIMEOUT = 45L
         private const val READ_TIMEOUT = 45L
         private const val WRITE_TIMEOUT = 45L

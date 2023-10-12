@@ -8,10 +8,12 @@ package com.incetro.quotebook.quoteinteractor
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.incetro.quotebook.entity.category.Category
 import com.incetro.quotebook.entity.quote.Author
-import com.incetro.quotebook.entity.quote.Category
 import com.incetro.quotebook.entity.quote.Quote
 import com.incetro.quotebook.model.interactor.QuoteInteractor
+import com.incetro.quotebook.model.repository.quote.QuoteFactory
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.joda.time.DateTime
 import org.junit.Assert
@@ -30,6 +32,8 @@ class QuoteInteractorInstrumentedTest {
 
     @Inject
     lateinit var quoteInteractor: QuoteInteractor
+
+    private val quoteFactory = QuoteFactory()
 
     @Before
     fun setupTest() {
@@ -75,6 +79,29 @@ class QuoteInteractorInstrumentedTest {
         }
     }
 
+    @Test
+    fun addManyQuotes() {
+        runTest {
+            val quotes = listOf<Quote>(
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+                quoteFactory.getQuote(),
+            )
+            quoteInteractor.addQuotes(quotes)
+            val addedQuotes = quoteInteractor.observeQuotes().first().sortedBy { it.writingDate }
+            val contentCompare = quotes.mapIndexed { index, quote ->
+                println("index = $index quote = $quote,\n addedQuote = ${addedQuotes[index]}")
+                compareQuotesContent(
+                    quote.copy(
+                        categories = quote.categories.toMutableList().distinctBy { it.name }),
+                    addedQuotes[index]
+                )
+            }
+            Assert.assertTrue(contentCompare.all { it })
+        }
+    }
+
     @Test(expected = NullPointerException::class)
     fun deleteExistsQuote() {
         runTest {
@@ -116,7 +143,7 @@ class QuoteInteractorInstrumentedTest {
             val editedQuote = existsQuote.copy(
                 content = "",
                 source = "",
-                author = null,
+                author = Author(name = ""),
                 writingDate = DateTime.now(),
                 categories = emptyList()
             )
@@ -150,11 +177,13 @@ class QuoteInteractorInstrumentedTest {
     private fun compareQuotesContent(
         editedQuote: Quote,
         editedQuoteFromDb: Quote
-    ) = (editedQuote.id == editedQuoteFromDb.id
-            && editedQuote.content == editedQuoteFromDb.content
-            && editedQuote.source == editedQuoteFromDb.source
-            && editedQuote.categories compareNamesWith editedQuoteFromDb.categories
-            && editedQuote.author?.name == editedQuoteFromDb.author?.name)
+    ): Boolean {
+        Assert.assertEquals(editedQuote.content, editedQuoteFromDb.content)
+        Assert.assertEquals(editedQuote.source, editedQuoteFromDb.source)
+        Assert.assertTrue(editedQuote.categories compareNamesWith editedQuoteFromDb.categories)
+        Assert.assertEquals(editedQuote.author.name, editedQuoteFromDb.author.name)
+        return true
+    }
 
     private infix fun List<Category>.compareNamesWith(categories: List<Category>): Boolean {
         if (this.size != categories.size) return false

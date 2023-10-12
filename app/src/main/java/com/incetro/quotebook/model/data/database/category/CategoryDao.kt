@@ -12,6 +12,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.incetro.quotebook.model.data.database.BaseDao
 import com.incetro.quotebook.model.data.database.quote.QuoteCategoryCrossRef
+import timber.log.Timber
 
 @Dao
 interface CategoryDao : BaseDao<CategoryDto> {
@@ -20,10 +21,11 @@ interface CategoryDao : BaseDao<CategoryDto> {
     suspend fun addCategory(categoryName: String, quoteId: Long) {
         val categoryId = getCategoryByName(categoryName)?.id
             ?: insert(CategoryDto(name = categoryName))
-        updateCrossRefTable(
+        Timber.e("quoteId = $quoteId, categoryId = $categoryId")
+        insertCrossRefTable(
             QuoteCategoryCrossRef(
-                quoteId = quoteId.toLong(),
-                categoryId = categoryId.toLong(),
+                quoteId = quoteId,
+                categoryId = categoryId,
             )
         )
     }
@@ -32,6 +34,6 @@ interface CategoryDao : BaseDao<CategoryDto> {
     suspend fun getCategoryByName(categoryName: String): CategoryDto?
 
     @Insert
-    suspend fun updateCrossRefTable(crossRef: QuoteCategoryCrossRef)
+    suspend fun insertCrossRefTable(crossRef: QuoteCategoryCrossRef)
 
 }

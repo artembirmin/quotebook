@@ -20,6 +20,7 @@ import com.incetro.quotebook.common.navigation.AppRouter
 import com.incetro.quotebook.model.data.database.AppDatabase
 import com.incetro.quotebook.model.data.database.quote.QuoteDao
 import com.incetro.quotebook.model.data.network.api.CategoryApi
+import com.incetro.quotebook.model.interactor.QuoteInteractor
 import com.incetro.quotebook.model.repository.quote.QuoteRepository
 import com.incetro.quotebook.presentation.base.mvvm.viewmodel.BaseViewModelDependencies
 import dagger.Component
@@ -46,6 +47,7 @@ interface AppComponent {
 
     // CommonAppModule
     fun provideQuoteRepository(): QuoteRepository
+    fun provideQuoteInteractor(): QuoteInteractor
 
     // AppNavigationModule
     fun provideNavigationHolder(): NavigatorHolder

@@ -10,6 +10,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.incetro.quotebook.model.data.database.BaseDao
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuoteDao : BaseDao<QuoteDto> {
@@ -20,4 +21,8 @@ interface QuoteDao : BaseDao<QuoteDto> {
 
     @Query("DELETE FROM ${QuoteDto.TABLE_NAME} WHERE id = :id")
     suspend fun deleteQuoteById(id: Long)
+
+    @Transaction
+    @Query("SELECT * FROM ${QuoteDto.TABLE_NAME} ORDER BY writingDate DESC")
+    fun observeQuotes(): Flow<List<QuoteWithAuthorAndCategories>>
 }
