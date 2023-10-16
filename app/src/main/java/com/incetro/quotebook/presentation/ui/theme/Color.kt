@@ -8,6 +8,8 @@ package com.incetro.quotebook.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.ColorUtils
 
 val md_theme_light_primary = Color(0xFF6750A4)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
@@ -71,16 +73,34 @@ val md_theme_dark_surfaceTint = Color(0xFFD0BCFF)
 val md_theme_dark_outlineVariant = Color(0xFF49454F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
-val quoteBackgroundBrushes = mapOf(
-    0 to Brush.linearGradient(colors = listOf(Color(0xFFEF9A9A), Color(0xFFE57373))),
-    1 to Brush.linearGradient(colors = listOf(Color(0xFFF48FB1), Color(0xFFF06292))),
-    2 to Brush.linearGradient(colors = listOf(Color(0xFFCE93D8), Color(0xFFBA68C8))),
-    3 to Brush.linearGradient(colors = listOf(Color(0xFFB39DDB), Color(0xFF9575CD))),
-    4 to Brush.linearGradient(colors = listOf(Color(0xFF9FA8DA), Color(0xFF7986CB))),
-    5 to Brush.linearGradient(colors = listOf(Color(0xFF90CAF9), Color(0xFF64B5F6))),
-    6 to Brush.linearGradient(colors = listOf(Color(0xFF81D4FA), Color(0xFF4FC3F7))),
-    7 to Brush.linearGradient(colors = listOf(Color(0xFF80DEEA), Color(0xFF4DD0E1))),
+val quoteBackgroundBrushesLightColors = mapOf(
+    0 to listOf(Color(0xFFEF9A9A), Color(0xFFE57373)),
+    1 to listOf(Color(0xFFF48FB1), Color(0xFFF06292)),
+    2 to listOf(Color(0xFFCE93D8), Color(0xFFBA68C8)),
+    3 to listOf(Color(0xFFB39DDB), Color(0xFF9575CD)),
+    4 to listOf(Color(0xFF9FA8DA), Color(0xFF7986CB)),
+    5 to listOf(Color(0xFF90CAF9), Color(0xFF64B5F6)),
+    6 to listOf(Color(0xFF81D4FA), Color(0xFF4FC3F7)),
+    7 to listOf(Color(0xFF80DEEA), Color(0xFF4DD0E1)),
 )
 
+val quoteBackgroundBrushesLight = QuoteBackgroundBrushes(
+    quoteBackgroundBrushesLightColors.toMutableMap()
+        .mapValues { entry -> Brush.linearGradient(entry.value) }
+)
 
-val seed = Color(0xFF6750A4)
+val quoteBackgroundBrushesDark = QuoteBackgroundBrushes(
+    quoteBackgroundBrushesLightColors.toMutableMap()
+        .mapValues { entry ->
+            Brush.linearGradient(
+                entry.value.toMutableList().map { it.darker() })
+        }
+)
+
+fun Color.darker(ratio: Float = 0.23f): Color = Color(
+    ColorUtils.blendARGB(
+        this.toArgb(),
+        Color.Black.toArgb(),
+        ratio
+    )
+)

@@ -19,32 +19,34 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.incetro.quotebook.presentation.ui.theme.quoteBackgroundBrushes
+import com.incetro.quotebook.presentation.ui.theme.AppTheme
+import com.incetro.quotebook.presentation.ui.theme.ExtendedTheme
+import com.incetro.quotebook.presentation.ui.theme.Theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview()
 @Composable
 fun BottomSheetPrev() {
-    val scope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var backgroundBrush by remember { mutableStateOf(quoteBackgroundBrushes[0]!!) }
-    BottomSheetScaffold(
-        sheetContent = {
-            SelectBackgroundBottomSheetContent { backgroundBrush = quoteBackgroundBrushes[it]!! }
-        },
-        scaffoldState = rememberBottomSheetScaffoldState(sheetState),
-//        sheetPeekHeight = 50.dp,
-    ) {
-        ScreenContent(scope, sheetState, { }, backgroundBrush)
+    AppTheme(manualTheme = Theme.DARK) {
+        val scope = rememberCoroutineScope()
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        var backgroundBrushId by remember { mutableStateOf<Int?>(null) }
+        BottomSheetScaffold(
+            sheetContent = {
+                SelectBackgroundBottomSheetContent { backgroundBrushId = it }
+            },
+            scaffoldState = rememberBottomSheetScaffoldState(sheetState),
+        ) {
+            ScreenContent(scope, sheetState, { }, backgroundBrushId)
+        }
     }
 }
 
@@ -54,12 +56,12 @@ private fun ScreenContent(
     scope: CoroutineScope,
     state: SheetState,
     onClick: () -> Unit,
-    newBackgroundBrush: Brush,
+    backgroundBrushId: Int?,
 ) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(brush = newBackgroundBrush)
+            .background(brush = ExtendedTheme.quoteBackgroundBrushes.getBrushById(id = backgroundBrushId))
     ) {
         Button(
             onClick = {
@@ -101,7 +103,7 @@ fun SelectBackgroundBottomSheetContent(onBackgroundSelected: (Int) -> Unit) {
         val scope = rememberCoroutineScope()
         val itemSize = 160.dp
         HorizontalPager(
-            pageCount = quoteBackgroundBrushes.size,
+            pageCount = ExtendedTheme.quoteBackgroundBrushes.size,
             state = pagerState,
             pageSize = PageSize.Fixed(itemSize),
             contentPadding = PaddingValues(
@@ -142,7 +144,7 @@ fun SelectBackgroundBottomSheetContent(onBackgroundSelected: (Int) -> Unit) {
                     Modifier
                         .fillMaxSize()
                         .background(
-                            quoteBackgroundBrushes[page]!!
+                            ExtendedTheme.quoteBackgroundBrushes.getBrushById(id = page)
                         )
                 )
                 Text(text = "Page = $page")

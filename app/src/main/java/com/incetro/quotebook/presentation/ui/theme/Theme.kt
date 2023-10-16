@@ -11,8 +11,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import com.incetro.quotebook.app.App
 
 
@@ -86,10 +90,11 @@ enum class Theme {
 
 @Composable
 fun AppTheme(
+    manualTheme: Theme? = null,
     content: @Composable () -> Unit
 ) {
     val theme by remember {
-        App.theme
+        if (manualTheme == null) App.theme else mutableStateOf(manualTheme)
     }
 
     val colors = when (theme) {
@@ -98,8 +103,46 @@ fun AppTheme(
         Theme.LIGHT -> LightColors
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        content = content
-    )
+    val quoteBackgroundBrushes = when (theme) {
+        Theme.SYSTEM -> if (isSystemInDarkTheme()) quoteBackgroundBrushesDark else quoteBackgroundBrushesLight
+        Theme.DARK -> quoteBackgroundBrushesDark
+        Theme.LIGHT -> quoteBackgroundBrushesLight
+    }
+
+    CompositionLocalProvider(LocalQuoteBackgroundBrushes provides quoteBackgroundBrushes) {
+        MaterialTheme(
+            colorScheme = colors,
+            content = content
+        )
+    }
+}
+
+val LocalQuoteBackgroundBrushes = staticCompositionLocalOf {
+    QuoteBackgroundBrushes(brushes = emptyMap())
+}
+
+data class QuoteBackgroundBrushes(
+    private val brushes: Map<Int, Brush>
+) {
+    val size: Int
+        get() = brushes.size
+    val defaultBrush
+        @Composable
+        get() = Brush.horizontalGradient(
+            listOf(
+                MaterialTheme.colorScheme.surface,
+                MaterialTheme.colorScheme.surface
+            )
+        )
+
+    @Composable
+    fun getBrushById(id: Int?): Brush {
+        return brushes[id] ?: defaultBrush
+    }
+}
+
+object ExtendedTheme {
+    val quoteBackgroundBrushes: QuoteBackgroundBrushes
+        @Composable
+        get() = LocalQuoteBackgroundBrushes.current
 }
