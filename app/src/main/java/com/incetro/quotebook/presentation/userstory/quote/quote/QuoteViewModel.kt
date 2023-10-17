@@ -81,7 +81,27 @@ class QuoteViewModel @AssistedInject constructor(
     }
 
     fun onChangeBackgroundClick() {
+        intent {
+            reduce {
+                state.copy(showBackgroundBottomSheet = true)
+            }
+        }
+    }
 
+    fun onChangeSheetVisibility(isVisible: Boolean) {
+        intent {
+            reduce {
+                state.copy(showBackgroundBottomSheet = isVisible)
+            }
+        }
+    }
+
+    fun onBackgroundSelected(backgroundId: Int) {
+        intent {
+            reduce {
+                state.copy(backgroundBrushId = backgroundId)
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -107,6 +127,10 @@ class QuoteViewModel @AssistedInject constructor(
                             }
                         )
                     )
+                }
+            } else if (state.showBackgroundBottomSheet) {
+                reduce {
+                    state.copy(showBackgroundBottomSheet = false)
                 }
             } else {
                 quoteInteractor.updateQuote(state.getQuote())

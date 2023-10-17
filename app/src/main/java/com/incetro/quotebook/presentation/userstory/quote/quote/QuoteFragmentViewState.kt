@@ -26,6 +26,8 @@ data class QuoteFragmentViewState(
     val source: String = "",
     val dateTime: DateTime = DateTime.now(),
     val categoriesLoading: Boolean = false,
+    val showBackgroundBottomSheet: Boolean = false,
+    val backgroundBrushId: Int? = null,
     @IgnoredOnParcel override var dialogState: AlertDialogState = AlertDialogState(),
     @IgnoredOnParcel override var loaderState: LoaderState = LoaderState()
 ) : ViewState(), Parcelable {

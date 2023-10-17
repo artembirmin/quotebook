@@ -91,7 +91,7 @@ fun SelectBackgroundBottomSheetContent(onBackgroundSelected: (Int) -> Unit) {
         Modifier
             .height(300.dp)
             .fillMaxWidth()
-            .padding(top = 32.dp),
+            .padding(top = 32.dp, bottom = 48.dp),
         contentAlignment = Alignment.TopCenter
     ) {
         val pagerState = rememberPagerState()
