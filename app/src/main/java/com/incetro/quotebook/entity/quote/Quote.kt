@@ -20,6 +20,7 @@ data class Quote(
     val author: Author = Author(),
     val writingDate: DateTime,
     val categories: List<Category> = emptyList(),
+    val backgroundId: Int? = null
 ) : Parcelable {
 
     fun toQuoteDto(writingDate: DateTime? = null): QuoteDto = QuoteDto(
@@ -27,7 +28,8 @@ data class Quote(
         content = content,
         source = source,
         authorId = author.id,
-        writingDate = writingDate ?: this.writingDate
+        writingDate = writingDate ?: this.writingDate,
+        backgroundId = backgroundId
     )
 }
 

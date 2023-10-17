@@ -21,6 +21,7 @@ import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 
 @OptIn(OrbitExperimental::class)
 class QuoteViewModel @AssistedInject constructor(
@@ -41,7 +42,7 @@ class QuoteViewModel @AssistedInject constructor(
             onCreate = { showQuote() }
         )
 
-    fun showQuote() = intent {
+    private fun showQuote() = intent {
         val quoteId = state.quoteId
         val quote = if (quoteId == null) {
             quoteInteractor.createEmptyQuote()
@@ -49,13 +50,15 @@ class QuoteViewModel @AssistedInject constructor(
             quoteInteractor.getQuote(quoteId)
         }
         reduce {
+            Timber.e("showQuote = $quote")
             state.copy(
                 quoteId = quote.id,
                 content = quote.content,
                 authorName = quote.author.name,
                 categories = quote.categories,
                 source = quote.source,
-                dateTime = quote.writingDate
+                dateTime = quote.writingDate,
+                backgroundBrushId = quote.backgroundId
             )
         }
     }
@@ -133,6 +136,7 @@ class QuoteViewModel @AssistedInject constructor(
                     state.copy(showBackgroundBottomSheet = false)
                 }
             } else {
+                Timber.e("updateQuote state = $state")
                 quoteInteractor.updateQuote(state.getQuote())
                 router.exit()
             }

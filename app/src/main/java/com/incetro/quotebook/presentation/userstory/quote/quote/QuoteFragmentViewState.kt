@@ -41,6 +41,6 @@ data class QuoteFragmentViewState(
         author = Author(name = this.authorName),
         source = this.source,
         writingDate = DateTime.now(),
+        backgroundId = backgroundBrushId
     )
-
 }

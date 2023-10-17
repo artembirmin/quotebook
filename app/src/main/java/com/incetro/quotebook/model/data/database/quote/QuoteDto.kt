@@ -20,6 +20,7 @@ data class QuoteDto(
     val source: String = "",
     val authorId: Long = 0,
     val writingDate: DateTime = DateTime.now(),
+    val backgroundId: Int? = null,
 ) {
 
     companion object {

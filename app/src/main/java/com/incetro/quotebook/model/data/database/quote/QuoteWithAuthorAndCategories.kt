@@ -39,6 +39,7 @@ data class QuoteWithAuthorAndCategories(
         source = quoteDto.source,
         author = author.toAuthor(),
         writingDate = quoteDto.writingDate,
-        categories = categories.map { it.toCategory() }
+        categories = categories.map { it.toCategory() },
+        backgroundId = quoteDto.backgroundId
     )
 }

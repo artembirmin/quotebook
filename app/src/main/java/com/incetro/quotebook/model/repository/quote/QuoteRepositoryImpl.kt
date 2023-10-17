@@ -26,7 +26,7 @@ class QuoteRepositoryImpl @Inject constructor(
         val newQuoteId = quoteDao.insert(
             QuoteDto(
                 authorId = emptyAuthorId,
-                writingDate = writingDate
+                writingDate = writingDate,
             )
         )
         return Quote(id = newQuoteId, writingDate = writingDate)
