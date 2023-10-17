@@ -13,22 +13,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -115,6 +118,11 @@ private fun QuoteInfoContent(
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val openBottomSheet by rememberSaveable(viewState.showBackgroundBottomSheet) {
+        mutableStateOf(
+            viewState.showBackgroundBottomSheet
+        )
+    }
     LaunchedEffect(sheetState) {
         snapshotFlow { sheetState.isVisible }.collect { isVisible ->
             onChangeSheetVisibility(isVisible)
@@ -131,9 +139,9 @@ private fun QuoteInfoContent(
     }
 
     Box(modifier = Modifier.background(ExtendedTheme.quoteBackgroundBrushes.getBrushById(id = viewState.backgroundBrushId))) {
-        BottomSheetScaffold(
-            sheetContent = { SelectBackgroundBottomSheetContent(onBackgroundSelected) },
-            scaffoldState = rememberBottomSheetScaffoldState(sheetState),
+        Scaffold(
+//            sheetContent = { SelectBackgroundBottomSheetContent(onBackgroundSelected) },
+//            scaffoldState = rememberBottomSheetScaffoldState(sheetState),
             containerColor = Color.Transparent,
             topBar = {
                 TopAppBar(
@@ -236,6 +244,20 @@ private fun QuoteInfoContent(
                     }
                 }
             }
+        }
+    }
+
+    if (openBottomSheet) {
+        val windowInsets = BottomSheetDefaults.windowInsets
+        ModalBottomSheet(
+            onDismissRequest = onBackPressed,
+            sheetState = sheetState,
+            windowInsets = windowInsets
+        ) {
+            SelectBackgroundBottomSheetContent(
+                backgroundBrushId = viewState.backgroundBrushId,
+                onBackgroundSelected = onBackgroundSelected
+            )
         }
     }
 }

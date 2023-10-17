@@ -74,14 +74,14 @@ val md_theme_dark_outlineVariant = Color(0xFF49454F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
 val quoteBackgroundBrushesLightColors = mutableMapOf(
-    0 to listOf(Color(0xFFEF9A9A), Color(0xFFE57373)),
-    1 to listOf(Color(0xFFF48FB1), Color(0xFFF06292)),
-    2 to listOf(Color(0xFFCE93D8), Color(0xFFBA68C8)),
-    3 to listOf(Color(0xFFB39DDB), Color(0xFF9575CD)),
-    4 to listOf(Color(0xFF9FA8DA), Color(0xFF7986CB)),
-    5 to listOf(Color(0xFF90CAF9), Color(0xFF64B5F6)),
-    6 to listOf(Color(0xFF81D4FA), Color(0xFF4FC3F7)),
-    7 to listOf(Color(0xFF80DEEA), Color(0xFF4DD0E1)),
+    1 to listOf(Color(0xFFEF9A9A), Color(0xFFE57373)),
+    2 to listOf(Color(0xFFF48FB1), Color(0xFFF06292)),
+    3 to listOf(Color(0xFFCE93D8), Color(0xFFBA68C8)),
+    4 to listOf(Color(0xFFB39DDB), Color(0xFF9575CD)),
+    5 to listOf(Color(0xFF9FA8DA), Color(0xFF7986CB)),
+    6 to listOf(Color(0xFF90CAF9), Color(0xFF64B5F6)),
+    7 to listOf(Color(0xFF81D4FA), Color(0xFF4FC3F7)),
+    8 to listOf(Color(0xFF80DEEA), Color(0xFF4DD0E1)),
 ).mapValues { entry -> entry.value.map { it.copy(alpha = 0.5f) } }
 
 val quoteBackgroundBrushesLight = QuoteBackgroundBrushes(

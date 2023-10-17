@@ -31,6 +31,79 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SelectBackgroundBottomSheetContent(
+    backgroundBrushId: Int?,
+    onBackgroundSelected: (Int) -> Unit
+) {
+    Box(
+        Modifier
+            .height(300.dp)
+            .fillMaxWidth()
+            .padding(top = 32.dp, bottom = 48.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        val pagerState = rememberPagerState()
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                onBackgroundSelected(page)
+            }
+        }
+        val scope = rememberCoroutineScope()
+        val itemSize = 160.dp
+        LaunchedEffect(backgroundBrushId) {
+            backgroundBrushId?.let { pagerState.scrollToPage(it) }
+        }
+        HorizontalPager(
+            pageCount = ExtendedTheme.quoteBackgroundBrushes.size + 1,
+            state = pagerState,
+            pageSize = PageSize.Fixed(itemSize),
+            contentPadding = PaddingValues(
+                horizontal = (LocalConfiguration.current.screenWidthDp.dp - itemSize) / 2
+            ),
+            pageSpacing = 8.dp
+        ) { page ->
+            Card(
+                Modifier
+                    .size(width = itemSize, height = itemSize + 50.dp)
+                    .graphicsLayer {
+
+                        val pageOffset =
+                            ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+                                .absoluteValue
+
+                        alpha = lerp(
+                            start = 0.5f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        )
+                        scaleX = lerp(
+                            start = 0.9f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        )
+                        scaleY = lerp(
+                            start = 0.9f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        )
+                    }
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        scope.launch {
+                            pagerState.animateScrollToPage(page)
+                        }
+                    },
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(
+                            ExtendedTheme.quoteBackgroundBrushes.getBrushById(id = page)
+                        )
+                )
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview()
 @Composable
@@ -41,7 +114,10 @@ fun BottomSheetPrev() {
         var backgroundBrushId by remember { mutableStateOf<Int?>(null) }
         BottomSheetScaffold(
             sheetContent = {
-                SelectBackgroundBottomSheetContent { backgroundBrushId = it }
+                SelectBackgroundBottomSheetContent(
+                    null,
+                    { backgroundBrushId = it },
+                )
             },
             scaffoldState = rememberBottomSheetScaffoldState(sheetState),
         ) {
@@ -84,73 +160,5 @@ private fun ScreenContent(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun SelectBackgroundBottomSheetContent(onBackgroundSelected: (Int) -> Unit) {
-    Box(
-        Modifier
-            .height(300.dp)
-            .fillMaxWidth()
-            .padding(top = 32.dp, bottom = 48.dp),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        val pagerState = rememberPagerState()
-        LaunchedEffect(pagerState) {
-            snapshotFlow { pagerState.currentPage }.collect { page ->
-                onBackgroundSelected(page)
-            }
-        }
-        val scope = rememberCoroutineScope()
-        val itemSize = 160.dp
-        HorizontalPager(
-            pageCount = ExtendedTheme.quoteBackgroundBrushes.size,
-            state = pagerState,
-            pageSize = PageSize.Fixed(itemSize),
-            contentPadding = PaddingValues(
-                horizontal = (LocalConfiguration.current.screenWidthDp.dp - itemSize) / 2
-            ),
-            pageSpacing = 8.dp
-        ) { page ->
-            // Our page content
-            Card(
-                Modifier
-                    .size(width = itemSize, height = itemSize + 50.dp)
-                    .graphicsLayer {
-
-                        val pageOffset =
-                            ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
-                                .absoluteValue
-
-                        alpha = lerp(
-                            start = 0.5f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                        )
-                        scaleX = lerp(
-                            start = 0.9f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                        )
-                        scaleY = lerp(
-                            start = 0.9f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                        )
-                    }
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page)
-                        }
-                    },
-            ) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(
-                            ExtendedTheme.quoteBackgroundBrushes.getBrushById(id = page)
-                        )
-                )
-                Text(text = "Page = $page")
-            }
-        }
-    }
-}
 
 

@@ -126,6 +126,7 @@ data class QuoteBackgroundBrushes(
 ) {
     val size: Int
         get() = brushes.size
+
     val defaultBrush
         @Composable
         get() = Brush.horizontalGradient(
@@ -137,7 +138,8 @@ data class QuoteBackgroundBrushes(
 
     @Composable
     fun getBrushById(id: Int?): Brush {
-        return brushes[id] ?: defaultBrush
+        return if (id == 0 || id == null) defaultBrush
+        else brushes[id] ?: defaultBrush
     }
 }
 
