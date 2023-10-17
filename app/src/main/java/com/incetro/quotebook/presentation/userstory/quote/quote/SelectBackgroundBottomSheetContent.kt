@@ -31,6 +31,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun SelectQuoteBackgroundBottomSheet(
+    onBackPressed: () -> Unit,
+    sheetState: SheetState,
+    viewState: QuoteFragmentViewState,
+    onBackgroundSelected: (backgroundId: Int) -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onBackPressed,
+        sheetState = sheetState,
+    ) {
+        SelectBackgroundBottomSheetContent(
+            backgroundBrushId = viewState.backgroundBrushId,
+            onBackgroundSelected = onBackgroundSelected
+        )
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectBackgroundBottomSheetContent(
